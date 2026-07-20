@@ -14,7 +14,6 @@
 :root{
   --bg:#f4f6fb; --card:#ffffff; --text:#1c2230; --sub:#6b7280; --line:#e7eaf1;
   --primary:#5b63e8;
-  --c-reading:#3b82f6; --c-words:#8b5cf6; --c-longs:#0d9d97; --c-fitness:#f59e0b; --c-todo:#10b981;
   --shadow:0 1px 3px rgba(28,34,48,.06), 0 6px 18px rgba(28,34,48,.05);
 }
 @media (prefers-color-scheme: dark){
@@ -63,6 +62,9 @@ body{
 .card-info{flex:1; min-width:0;}
 .card-title{font-weight:600; font-size:1rem;}
 .card-sub{font-size:.78rem; color:var(--sub); margin-top:1px;}
+.chip{display:inline-block; font-size:.66rem; border-radius:6px; padding:0 6px; margin-left:6px; vertical-align:2px; font-weight:500;}
+.chip.req{background:color-mix(in srgb, var(--mc) 16%, transparent); color:var(--mc);}
+.chip.opt{border:1px solid var(--line); color:var(--sub);}
 .check{
   width:46px; height:46px; border-radius:50%; flex:none; cursor:pointer;
   border:2.5px solid var(--mc); background:transparent;
@@ -101,15 +103,15 @@ textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:
 .todo-row{display:flex; align-items:center; gap:10px; padding:9px 2px; border-bottom:1px solid var(--line);}
 .todo-row:last-of-type{border-bottom:none;}
 .todo-check{
-  width:24px; height:24px; border-radius:8px; border:2px solid var(--c-todo);
+  width:24px; height:24px; border-radius:8px; border:2px solid #10b981;
   background:transparent; flex:none; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
 }
 .todo-check svg{width:14px; height:14px; fill:none; stroke:#fff; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; opacity:0;}
-.todo-check.done{background:var(--c-todo);}
+.todo-check.done{background:#10b981;}
 .todo-check.done svg{opacity:1;}
 .todo-text{flex:1; font-size:.93rem; word-break:break-all;}
 .todo-text.done{color:var(--sub); text-decoration:line-through;}
-.todo-tag{font-size:.68rem; color:var(--c-todo); border:1px solid color-mix(in srgb,var(--c-todo) 45%,transparent); border-radius:6px; padding:0 5px; flex:none;}
+.todo-tag{font-size:.68rem; color:#10b981; border:1px solid color-mix(in srgb,#10b981 45%,transparent); border-radius:6px; padding:0 5px; flex:none;}
 .todo-del{border:none; background:none; color:var(--sub); font-size:1.05rem; cursor:pointer; padding:4px 6px; flex:none;}
 .todo-add{display:flex; gap:8px; margin-top:10px;}
 .todo-add input{flex:1;}
@@ -117,10 +119,27 @@ textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:
   border:none; border-radius:10px; background:var(--primary); color:#fff;
   font:inherit; font-size:.88rem; font-weight:500; padding:9px 16px; cursor:pointer; flex:none;
 }
+a.btn{display:inline-flex; align-items:center; gap:6px; text-decoration:none; margin-top:10px;}
 .btn.ghost{background:var(--bg); color:var(--text); border:1px solid var(--line);}
 .btn:active{opacity:.8;}
 .hint{font-size:.76rem; color:var(--sub); margin-top:8px;}
+.warn-box{
+  font-size:.8rem; margin-top:10px; border-radius:10px; padding:9px 11px;
+  background:color-mix(in srgb,#f59e0b 12%,var(--card)); border:1px solid color-mix(in srgb,#f59e0b 35%,transparent);
+}
 .empty{font-size:.85rem; color:var(--sub); padding:8px 2px;}
+/* ---------- module editor ---------- */
+.mod-edit{border:1px solid var(--line); border-radius:12px; padding:10px; margin-top:10px;}
+.me-row{display:flex; gap:6px; align-items:center;}
+.me-row .me-icon{width:52px; text-align:center; flex:none; padding:7px 4px;}
+.me-row .me-name{flex:1; min-width:0; padding:7px 9px;}
+.me-req{display:flex; align-items:center; gap:4px; font-size:.78rem; color:var(--sub); flex:none; cursor:pointer;}
+.me-req input{width:16px; height:16px; accent-color:var(--primary);}
+.me-btn{border:1px solid var(--line); background:var(--bg); color:var(--sub); width:30px; height:30px; border-radius:8px; cursor:pointer; flex:none; font-size:.85rem; padding:0;}
+.me-fields{margin-top:4px;}
+.me-fields-label{font-size:.72rem; color:var(--sub); margin-top:8px;}
+.me-field{display:flex; gap:6px; margin-top:6px;}
+.me-field input{flex:1; font-size:.85rem; padding:6px 9px;}
 /* ---------- stats ---------- */
 .stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
 .stat-card{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:12px;}
@@ -144,10 +163,8 @@ textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:
 .cal-cell.today{border-color:var(--primary);}
 .cal-cell.sel{background:color-mix(in srgb,var(--primary) 14%,var(--card));}
 .cal-cell.full .d{color:var(--primary); font-weight:700;}
-.cal-dots{display:flex; gap:2.5px; height:5px;}
-.cal-dots i{width:5px; height:5px; border-radius:50%;}
-.dot-reading{background:var(--c-reading);} .dot-words{background:var(--c-words);}
-.dot-longs{background:var(--c-longs);} .dot-fitness{background:var(--c-fitness);}
+.cal-dots{display:flex; gap:2.5px; height:5px; max-width:90%; overflow:hidden;}
+.cal-dots i{width:5px; height:5px; border-radius:50%; flex:none;}
 .legend{display:flex; flex-wrap:wrap; gap:12px; padding:10px 2px; font-size:.74rem; color:var(--sub);}
 .legend span{display:flex; align-items:center; gap:4px;}
 .legend i{width:7px; height:7px; border-radius:50%; display:inline-block;}
@@ -215,24 +232,36 @@ const REPO  = "11111111";
 const DATA_PATH = "data/checkin-data.json";
 const LS_DATA = "daka.data.v1";
 const LS_SET  = "daka.settings.v1";
-
-const MODS = {
-  reading:{ name:"阅读",  icon:"📖", cls:"reading", color:"var(--c-reading)", sub:"这篇讲了什么？作者立场？难句 & 好句" },
-  words:{   name:"单词",  icon:"🔤", cls:"words",   color:"var(--c-words)",   sub:"背单词 / 复习单词" },
-  longs:{   name:"长难句",icon:"🧩", cls:"longs",   color:"var(--c-longs)",   sub:"分析一句长难句" },
-  fitness:{ name:"健身",  icon:"💪", cls:"fitness", color:"var(--c-fitness)", sub:"动起来，记一笔" }
-};
-const MOD_KEYS = ["reading","words","longs","fitness"];
 const WD = ["日","一","二","三","四","五","六"];
+const PALETTE = ["#f59e0b","#8b5cf6","#0d9d97","#3b82f6","#ef4444","#10b981","#ec4899","#6366f1"];
+
+/* 默认打卡项：健身（非必选）→ 单词 → 长难句 → 阅读，全部可在“设置”里编辑 */
+function defaultModConfig(){
+  return { updatedAt:0, items:[
+    { id:"fitness", name:"健身", icon:"💪", color:"#f59e0b", required:false,
+      fields:[{ id:"note", label:"训练记录", ph:"今天练了什么？部位 / 时长 / 组数…" }] },
+    { id:"words", name:"单词", icon:"🔤", color:"#8b5cf6", required:true,
+      fields:[{ id:"note", label:"备注", ph:"今天背了哪些？（可不填）" }] },
+    { id:"longs", name:"长难句", icon:"🧩", color:"#0d9d97", required:true,
+      fields:[{ id:"note", label:"备注", ph:"分析了哪句？（可不填）" }] },
+    { id:"reading", name:"阅读", icon:"📖", color:"#3b82f6", required:true,
+      fields:[
+        { id:"summary", label:"📄 这篇讲了什么？", ph:"用一两句话概括…" },
+        { id:"stance",  label:"🎯 作者的立场是什么？", ph:"支持 / 反对 / 中立？理由是…" },
+        { id:"hard",    label:"🧗 标出的难句", ph:"抄下让你卡住的句子…" },
+        { id:"fav",     label:"💖 喜欢的句子", ph:"值得摘抄的好句…" }
+      ] }
+  ]};
+}
 
 /* ================= 状态 ================= */
-let db = null;                 // 全部打卡数据
+let db = null;
 let settings = { token:"", branch:"" };
 let currentTab = "today";
-let selectedDate = todayStr(); // “今日”页正在编辑的日期（可补卡）
-let calY, calM;                // 日历当前年月
+let selectedDate = todayStr();
+let calY, calM;
 let selectedCalDate = todayStr();
-let openPanels = new Set();    // 展开的笔记面板
+let openPanels = new Set();
 let sync = { inFlight:false, pending:false, attempts:0, lastOk:0, lastErr:"", timer:null, state:"off" };
 
 /* ================= 工具函数 ================= */
@@ -242,7 +271,6 @@ function fmtDate(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.ge
 function todayStr(){ return fmtDate(new Date()); }
 function parseDate(s){ const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
 function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-function debounce(fn, ms){ let t; return function(){ clearTimeout(t); t = setTimeout(fn, ms); }; }
 function dateCN(s){ const d = parseDate(s); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
 
 function sortKeysDeep(x){
@@ -268,30 +296,45 @@ function b64decode(b64){
   return new TextDecoder().decode(bytes);
 }
 
-/* ================= 数据模型 ================= */
-function emptyDay(){
-  return {
-    updatedAt:0,
-    english:{
-      reading:{ done:false, doneAt:0, summary:"", stance:"", hard:"", fav:"" },
-      words:{ done:false, doneAt:0, note:"" },
-      longs:{ done:false, doneAt:0, note:"" }
-    },
-    fitness:{ done:false, doneAt:0, note:"" },
-    todos:[]
-  };
-}
+/* ================= 数据模型 =================
+   day = { updatedAt, mods:{ [模块id]: {done, doneAt, notes:{ [字段id]: 文本 }} }, todos:[] } */
 function normalizeDay(d){
-  const e = emptyDay();
+  const e = { updatedAt:0, mods:{}, todos:[] };
   if(!d || typeof d !== "object") return e;
   e.updatedAt = d.updatedAt || 0;
-  ["reading","words","longs"].forEach(k => Object.assign(e.english[k], (d.english && d.english[k]) || {}));
-  Object.assign(e.fitness, d.fitness || {});
   if(Array.isArray(d.todos)) e.todos = d.todos.filter(t => t && t.text);
+  if(d.mods && typeof d.mods === "object"){
+    Object.keys(d.mods).forEach(k=>{
+      const m = d.mods[k] || {};
+      e.mods[k] = { done:!!m.done, doneAt:m.doneAt||0, notes:(m.notes && typeof m.notes === "object") ? m.notes : {} };
+    });
+  }else if(d.english || d.fitness){
+    // 旧版(v1)数据迁移
+    const r = (d.english && d.english.reading) || {};
+    const w = (d.english && d.english.words) || {};
+    const l = (d.english && d.english.longs) || {};
+    const f = d.fitness || {};
+    e.mods.reading = { done:!!r.done, doneAt:r.doneAt||0, notes:{ summary:r.summary||"", stance:r.stance||"", hard:r.hard||"", fav:r.fav||"" } };
+    e.mods.words   = { done:!!w.done, doneAt:w.doneAt||0, notes:{ note:w.note||"" } };
+    e.mods.longs   = { done:!!l.done, doneAt:l.doneAt||0, notes:{ note:l.note||"" } };
+    e.mods.fitness = { done:!!f.done, doneAt:f.doneAt||0, notes:{ note:f.note||"" } };
+  }
   return e;
 }
+function normalizeConfig(c){
+  const def = defaultModConfig();
+  if(!c || typeof c !== "object" || !Array.isArray(c.items) || !c.items.length) return def;
+  const items = c.items.filter(m => m && m.id && m.name).map((m,i)=>({
+    id:String(m.id), name:String(m.name), icon:String(m.icon||"⭐"),
+    color:String(m.color || PALETTE[i % PALETTE.length]), required:!!m.required,
+    fields:(Array.isArray(m.fields) ? m.fields : []).filter(f => f && f.id).map(f=>({
+      id:String(f.id), label:String(f.label||"备注"), ph:String(f.ph||"")
+    }))
+  }));
+  return items.length ? { updatedAt:c.updatedAt||0, items } : def;
+}
 function normalizeDb(x){
-  const out = { version:1, days:{}, dailyTemplates:{ updatedAt:0, items:[] } };
+  const out = { version:2, days:{}, dailyTemplates:{ updatedAt:0, items:[] }, modConfig:defaultModConfig() };
   if(x && typeof x === "object"){
     if(x.days && typeof x.days === "object"){
       Object.keys(x.days).forEach(k => { if(/^\d{4}-\d{2}-\d{2}$/.test(k)) out.days[k] = normalizeDay(x.days[k]); });
@@ -300,12 +343,14 @@ function normalizeDb(x){
       out.dailyTemplates.updatedAt = x.dailyTemplates.updatedAt || 0;
       if(Array.isArray(x.dailyTemplates.items)) out.dailyTemplates.items = x.dailyTemplates.items.filter(t => t && t.text);
     }
+    out.modConfig = normalizeConfig(x.modConfig);
   }
   return out;
 }
 function mergeDb(a, b){
-  const out = { version:1, days:{}, dailyTemplates:null };
+  const out = { version:2, days:{}, dailyTemplates:null, modConfig:null };
   out.dailyTemplates = ((a.dailyTemplates.updatedAt||0) >= (b.dailyTemplates.updatedAt||0)) ? a.dailyTemplates : b.dailyTemplates;
+  out.modConfig = ((a.modConfig.updatedAt||0) >= (b.modConfig.updatedAt||0)) ? a.modConfig : b.modConfig;
   const keys = new Set([...Object.keys(a.days), ...Object.keys(b.days)]);
   keys.forEach(k=>{
     const da = a.days[k], dbb = b.days[k];
@@ -313,13 +358,16 @@ function mergeDb(a, b){
   });
   return out;
 }
+function cfgItems(){ return db.modConfig.items; }
+function findMod(id){ return cfgItems().find(m => m.id === id); }
 function getDay(ds, create){
   let d = db.days[ds];
-  if(!d && create){ d = emptyDay(); db.days[ds] = d; }
-  return d || emptyDay();
+  if(!d && create){ d = normalizeDay(null); db.days[ds] = d; }
+  return d || normalizeDay(null);
 }
-function modState(day, key){ return key === "fitness" ? day.fitness : day.english[key]; }
-function isDone(day, key){ return !!(day && modState(normalizeDay(day), key).done); }
+function modState(day, id){ return day.mods[id] || { done:false, doneAt:0, notes:{} }; }
+function modStateW(day, id){ return day.mods[id] || (day.mods[id] = { done:false, doneAt:0, notes:{} }); }
+function isDone(dayRaw, id){ return !!(dayRaw && dayRaw.mods && dayRaw.mods[id] && dayRaw.mods[id].done); }
 
 function materializeTemplates(ds, day){
   if(ds < todayStr()) return; // 不给过去的日子自动生成固定任务
@@ -342,6 +390,11 @@ function loadSettings(){
 }
 function touch(day){
   day.updatedAt = Date.now();
+  saveLocal();
+  scheduleSync();
+}
+function touchConfig(){
+  db.modConfig.updatedAt = Date.now();
   saveLocal();
   scheduleSync();
 }
@@ -449,26 +502,29 @@ function renderToday(){
   materializeTemplates(ds, day);
   const d = parseDate(ds);
   const isToday = ds === todayStr();
-  const doneN = MOD_KEYS.filter(k => modState(day,k).done).length;
+  const items = cfgItems();
+  const req = items.filter(m => m.required);
+  const opt = items.filter(m => !m.required);
+  const doneReq = req.filter(m => isDone(day, m.id)).length;
+  const doneOpt = opt.filter(m => isDone(day, m.id)).length;
   const todoDone = day.todos.filter(t => t.done).length;
+
+  let meta = req.length ? `必选 ${doneReq}/${req.length}` : "";
+  if(opt.length) meta += (meta ? " · " : "") + `选做 ${doneOpt}/${opt.length}`;
+  if(day.todos.length) meta += ` · 待办 ${todoDone}/${day.todos.length}`;
+  if(req.length && doneReq === req.length) meta += " · 🎉 必选全部完成！";
 
   let html = `
   <div class="today-head">
     <div class="today-date">${d.getMonth()+1}月${d.getDate()}日 <small style="font-size:.9rem;font-weight:500;color:var(--sub)">星期${WD[d.getDay()]}</small></div>
-    <div class="today-meta">打卡 ${doneN}/4${day.todos.length ? ` · 待办 ${todoDone}/${day.todos.length}` : ""}${doneN === 4 ? " · 🎉 今日全部完成！" : ""}</div>
-    <div class="progress-bar"><i style="width:${doneN/4*100}%"></i></div>
+    <div class="today-meta">${meta}</div>
+    <div class="progress-bar"><i style="width:${req.length ? doneReq/req.length*100 : 0}%"></i></div>
     ${!isToday ? `<div class="banner"><span>📌 正在补卡：${dateCN(ds)}</span><button data-action="back-today">回到今天</button></div>` : ""}
   </div>
 
-  <div class="section-title">英 语</div>`;
+  <div class="section-title">打 卡</div>`;
 
-  html += modCard(day, "reading", readingPanel(day));
-  html += modCard(day, "words", inlineNote(day, "words", "备注：今天背了哪些？（可不填）"));
-  html += modCard(day, "longs", inlineNote(day, "longs", "备注：分析了哪句？（可不填）"));
-
-  html += `<div class="section-title">健 身</div>`;
-  html += modCard(day, "fitness",
-    `<div class="note-area"><textarea rows="2" data-field="fitness.note" placeholder="今天练了什么？部位 / 时长 / 组数…">${esc(day.fitness.note)}</textarea></div>`);
+  items.forEach(m => { html += modCard(day, m); });
 
   html += `<div class="section-title">今日待办</div>
   <div class="card">
@@ -490,75 +546,72 @@ function renderToday(){
 
   return html;
 }
-function modCard(day, key, extra){
-  const m = MODS[key];
-  const st = modState(day, key);
+function modCard(day, m){
+  const st = modState(day, m.id);
+  const chip = m.required ? `<span class="chip req">必选</span>` : `<span class="chip opt">选做</span>`;
+  const subDone = st.done && st.doneAt ? "✅ 已完成 · " + new Date(st.doneAt).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit",hour12:false}) : "";
   return `
   <div class="card" style="--mc:${m.color}">
     <div class="card-head">
-      <div class="mod-icon">${m.icon}</div>
+      <div class="mod-icon">${esc(m.icon)}</div>
       <div class="card-info">
-        <div class="card-title">${m.name}</div>
-        <div class="card-sub">${st.done && st.doneAt ? "✅ 已完成 · " + new Date(st.doneAt).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit",hour12:false}) : m.sub}</div>
+        <div class="card-title">${esc(m.name)}${chip}</div>
+        ${subDone ? `<div class="card-sub">${subDone}</div>` : ""}
       </div>
-      <button class="check ${st.done?"done":""}" data-action="toggle-mod" data-mod="${key}" aria-label="${m.name}打卡">
+      <button class="check ${st.done?"done":""}" data-action="toggle-mod" data-mod="${m.id}" aria-label="${esc(m.name)}打卡">
         <svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>
       </button>
     </div>
-    ${extra || ""}
+    ${modFields(day, m)}
   </div>`;
 }
-function readingPanel(day){
-  const r = day.english.reading;
-  const hasContent = !!(r.summary || r.stance || r.hard || r.fav);
-  const open = openPanels.has("reading") || hasContent;
-  if(!open) return `<button class="link-btn" data-action="open-panel" data-panel="reading">✏️ 写阅读笔记 ▾</button>`;
-  return `
-  <div class="note-area">
-    <div class="field-label">📄 这篇讲了什么？</div>
-    <textarea rows="2" data-field="reading.summary" placeholder="用一两句话概括…">${esc(r.summary)}</textarea>
-    <div class="field-label">🎯 作者的立场是什么？</div>
-    <textarea rows="2" data-field="reading.stance" placeholder="支持 / 反对 / 中立？理由是…">${esc(r.stance)}</textarea>
-    <div class="field-label">🧗 标出的难句</div>
-    <textarea rows="2" data-field="reading.hard" placeholder="抄下让你卡住的句子…">${esc(r.hard)}</textarea>
-    <div class="field-label">💖 喜欢的句子</div>
-    <textarea rows="2" data-field="reading.fav" placeholder="值得摘抄的好句…">${esc(r.fav)}</textarea>
-  </div>`;
-}
-function inlineNote(day, key, ph){
-  const st = modState(day, key);
-  return `<div class="note-area"><input type="text" data-field="${key}.note" placeholder="${ph}" value="${esc(st.note)}"></div>`;
+function modFields(day, m){
+  if(!m.fields.length) return "";
+  const st = modState(day, m.id);
+  if(m.fields.length === 1){
+    const f = m.fields[0];
+    return `<div class="note-area"><textarea rows="2" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea></div>`;
+  }
+  const hasContent = m.fields.some(f => st.notes[f.id]);
+  const open = openPanels.has(m.id) || hasContent;
+  if(!open) return `<button class="link-btn" data-action="open-panel" data-panel="${m.id}">✏️ 写笔记 ▾</button>`;
+  return `<div class="note-area">` + m.fields.map(f=>`
+    <div class="field-label">${esc(f.label)}</div>
+    <textarea rows="2" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea>`).join("") + `</div>`;
 }
 
 /* ================= 视图：记录（统计+日历） ================= */
-function streak(key){
+function streak(id){
   let d = new Date(), n = 0;
-  if(!isDone(db.days[fmtDate(d)], key)) d.setDate(d.getDate()-1); // 今天还没打不断签
-  while(isDone(db.days[fmtDate(d)], key)){ n++; d.setDate(d.getDate()-1); }
+  if(!isDone(db.days[fmtDate(d)], id)) d.setDate(d.getDate()-1); // 今天还没打不断签
+  while(isDone(db.days[fmtDate(d)], id)){ n++; d.setDate(d.getDate()-1); }
   return n;
 }
-function countMonth(key, y, m){
+function countMonth(id, y, m){
   const prefix = y + "-" + pad(m+1);
-  return Object.keys(db.days).filter(k => k.startsWith(prefix) && isDone(db.days[k], key)).length;
+  return Object.keys(db.days).filter(k => k.startsWith(prefix) && isDone(db.days[k], id)).length;
 }
-function countTotal(key){
-  return Object.keys(db.days).filter(k => isDone(db.days[k], key)).length;
+function countTotal(id){
+  return Object.keys(db.days).filter(k => isDone(db.days[k], id)).length;
+}
+function dayFull(dayRaw){
+  const req = cfgItems().filter(m => m.required);
+  return req.length > 0 && req.every(m => isDone(dayRaw, m.id));
 }
 function renderRecord(){
   const now = new Date();
+  const items = cfgItems();
   let html = `<div style="height:6px"></div><div class="stats-grid">`;
-  MOD_KEYS.forEach(k=>{
-    const m = MODS[k];
+  items.forEach(m=>{
     html += `
     <div class="stat-card">
-      <div class="stat-name"><span class="sw" style="background:${m.color}"></span>${m.icon} ${m.name}</div>
-      <div class="stat-main">连续 ${streak(k)} <small>天</small></div>
-      <div class="stat-sub">本月 ${countMonth(k, now.getFullYear(), now.getMonth())} 次 · 累计 ${countTotal(k)} 次</div>
+      <div class="stat-name"><span class="sw" style="background:${m.color}"></span>${esc(m.icon)} ${esc(m.name)}</div>
+      <div class="stat-main">连续 ${streak(m.id)} <small>天</small></div>
+      <div class="stat-sub">本月 ${countMonth(m.id, now.getFullYear(), now.getMonth())} 次 · 累计 ${countTotal(m.id)} 次</div>
     </div>`;
   });
   html += `</div>`;
 
-  // 日历
   const first = new Date(calY, calM, 1);
   const daysInMonth = new Date(calY, calM+1, 0).getDate();
   const offset = (first.getDay()+6) % 7; // 周一开头
@@ -575,47 +628,42 @@ function renderRecord(){
   const tds = todayStr();
   for(let i = 1; i <= daysInMonth; i++){
     const ds = calY + "-" + pad(calM+1) + "-" + pad(i);
-    const day = db.days[ds];
-    const dots = MOD_KEYS.filter(k => isDone(day, k));
+    const dayRaw = db.days[ds];
+    const dots = items.filter(m => isDone(dayRaw, m.id));
     const cls = ["cal-cell"];
     if(ds === tds) cls.push("today");
     if(ds === selectedCalDate) cls.push("sel");
-    if(dots.length === 4) cls.push("full");
+    if(dayFull(dayRaw)) cls.push("full");
     html += `
     <div class="${cls.join(" ")}" data-action="cal-day" data-date="${ds}">
       <span class="d">${i}</span>
-      <span class="cal-dots">${dots.map(k=>`<i class="dot-${MODS[k].cls}"></i>`).join("")}</span>
+      <span class="cal-dots">${dots.map(m=>`<i style="background:${m.color}"></i>`).join("")}</span>
     </div>`;
   }
   html += `</div>
   <div class="legend">
-    ${MOD_KEYS.map(k=>`<span><i style="background:${MODS[k].color}"></i>${MODS[k].name}</span>`).join("")}
-    <span>· 四项全完成的日子会高亮</span>
+    ${items.map(m=>`<span><i style="background:${m.color}"></i>${esc(m.name)}</span>`).join("")}
+    <span>· 必选全完成的日子会高亮</span>
   </div>`;
 
-  // 选中日期详情
   html += renderDayDetail(selectedCalDate);
   return html;
 }
 function renderDayDetail(ds){
-  const raw = db.days[ds];
-  const day = normalizeDay(raw);
-  const doneN = MOD_KEYS.filter(k => modState(day,k).done).length;
-  const previews = {
-    reading: [day.english.reading.summary, day.english.reading.stance, day.english.reading.hard, day.english.reading.fav].filter(Boolean).join(" / "),
-    words: day.english.words.note,
-    longs: day.english.longs.note,
-    fitness: day.fitness.note
-  };
+  const day = normalizeDay(db.days[ds]);
+  const items = cfgItems();
+  const req = items.filter(m => m.required);
+  const doneReq = req.filter(m => isDone(day, m.id)).length;
   let html = `
-  <div class="section-title">${dateCN(ds)} · 打卡 ${doneN}/4</div>
+  <div class="section-title">${dateCN(ds)}${req.length ? ` · 必选 ${doneReq}/${req.length}` : ""}</div>
   <div class="card day-detail">`;
-  MOD_KEYS.forEach(k=>{
-    const st = modState(day, k);
+  items.forEach(m=>{
+    const st = modState(day, m.id);
+    const preview = m.fields.map(f => st.notes[f.id]).filter(Boolean).join(" / ");
     html += `<div class="row">
       <span class="st ${st.done?"":"no"}">${st.done ? "✅" : "◻️"}</span>
-      <span class="nm">${MODS[k].name}</span>
-      <span class="tx">${esc(previews[k] || "")}</span>
+      <span class="nm">${esc(m.name)}</span>
+      <span class="tx">${esc(preview)}</span>
     </div>`;
   });
   if(day.todos.length){
@@ -631,6 +679,7 @@ function renderDayDetail(ds){
 /* ================= 视图：设置 ================= */
 function renderSettings(){
   const tpls = db.dailyTemplates.items || [];
+  const items = cfgItems();
   return `
   <div style="height:6px"></div>
   <div class="section-title">☁️ 多设备同步</div>
@@ -639,6 +688,8 @@ function renderSettings(){
       配置一次 GitHub Token，手机和电脑的数据就会通过你自己的仓库
       <b style="color:var(--text)">${OWNER}/${REPO}</b> 自动互通。数据只存在你的仓库里，Token 只保存在本设备浏览器中。
     </div>
+    <div class="warn-box">⚠️ 注意：Token 要在你的<b>个人账号设置</b>里创建。如果你看到的是 Deploy keys，说明进了<b>仓库</b>的 Settings，走错地方了——点下面的按钮直达正确页面。</div>
+    <a class="btn" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">🔗 直达 Token 创建页面</a>
     <div class="set-row">
       <input type="password" id="tokenInput" placeholder="粘贴 github_pat_ 开头的 Token" value="${esc(settings.token)}" autocomplete="off">
       <button class="btn ghost" data-action="toggle-token-vis" id="tokenVisBtn">显示</button>
@@ -649,18 +700,46 @@ function renderSettings(){
     </div>
     <div class="status-line" id="syncStatusLine"></div>
     <details>
-      <summary>如何获取 Token？（只需一次，约 2 分钟）</summary>
+      <summary>详细步骤（只需一次，约 2 分钟）</summary>
       <ol>
-        <li>打开 GitHub 网页并登录，点右上角头像 → <b>Settings</b></li>
-        <li>左侧栏拉到最底部 → <b>Developer settings</b></li>
-        <li><b>Personal access tokens → Fine-grained tokens → Generate new token</b></li>
-        <li>Token name 随便填（比如 <code>daka</code>）；Expiration 建议选最长时间</li>
-        <li>Repository access 选 <b>Only select repositories</b>，勾选 <code>${REPO}</code></li>
-        <li>Permissions → Repository permissions → <b>Contents</b> 选 <b>Read and write</b></li>
-        <li>点 <b>Generate token</b>，复制 <code>github_pat_</code> 开头的一长串，粘贴到上面输入框，点「保存并同步」</li>
+        <li>点上面的「直达 Token 创建页面」按钮（手动路径：GitHub 任意页面 → 点<b>右上角自己的头像</b> → Settings → 左侧栏拉到<b>最底部</b> → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token）</li>
+        <li>Token name 随便填（比如 <code>daka</code>）；Expiration 有效期建议选最长</li>
+        <li>Repository access 选 <b>Only select repositories</b>，在下拉里勾选 <code>${REPO}</code></li>
+        <li>往下找 Permissions → <b>Repository permissions</b> → 找到 <b>Contents</b> 一项 → 右侧选 <b>Read and write</b></li>
+        <li>拉到页面底部点 <b>Generate token</b>，复制 <code>github_pat_</code> 开头的一长串</li>
+        <li>粘贴到上面输入框，点「保存并同步」</li>
         <li>在另一台设备打开本页面，粘贴<b>同一个</b> Token，数据即互通 ✅</li>
       </ol>
     </details>
+  </div>
+
+  <div class="section-title">🧩 打卡项管理</div>
+  <div class="card">
+    <div style="font-size:.85rem; color:var(--sub)">每个打卡项都可以：改名、换图标（填个表情符号）、勾选是否<b>每日必选</b>、用 ↑↓ 调顺序、✕ 删除。「记录问题」是打卡时要填的笔记栏，同样可以增删改。</div>
+    ${items.map((m,i)=>`
+    <div class="mod-edit" style="--mc:${m.color}">
+      <div class="me-row">
+        <input type="text" class="me-icon" data-medit="icon" data-id="${m.id}" value="${esc(m.icon)}" maxlength="4" aria-label="图标">
+        <input type="text" class="me-name" data-medit="name" data-id="${m.id}" value="${esc(m.name)}" aria-label="名称">
+        <label class="me-req"><input type="checkbox" data-medit="required" data-id="${m.id}" ${m.required?"checked":""}>必选</label>
+        <button class="me-btn" data-action="mod-up" data-id="${m.id}" ${i===0?"disabled":""}>↑</button>
+        <button class="me-btn" data-action="mod-down" data-id="${m.id}" ${i===items.length-1?"disabled":""}>↓</button>
+        <button class="me-btn" data-action="mod-del" data-id="${m.id}">✕</button>
+      </div>
+      <div class="me-fields">
+        ${m.fields.length ? `<div class="me-fields-label">记录问题：</div>` : ""}
+        ${m.fields.map(f=>`
+        <div class="me-field">
+          <input type="text" data-fedit="${m.id}:${f.id}" value="${esc(f.label)}">
+          <button class="me-btn" data-action="field-del" data-mod="${m.id}" data-fid="${f.id}">✕</button>
+        </div>`).join("")}
+        <button class="link-btn" data-action="field-add" data-id="${m.id}">＋ 添加记录问题</button>
+      </div>
+    </div>`).join("")}
+    <div class="todo-add">
+      <input type="text" id="newModInput" placeholder="新打卡项名称，如：听力" enterkeyhint="done">
+      <button class="btn" data-action="mod-add">添加</button>
+    </div>
   </div>
 
   <div class="section-title">📌 每日固定任务</div>
@@ -692,7 +771,7 @@ function renderSettings(){
   <div class="card" style="font-size:.82rem; color:var(--sub)">
     · 数据实时保存在本机浏览器，配置同步后另存一份在仓库文件 <code style="background:var(--bg);border-radius:5px;padding:1px 5px">${DATA_PATH}</code><br>
     · 手机浏览器打开本页 → 菜单里选「添加到主屏幕」，即可像 App 一样使用<br>
-    · 点击历史日期可以补卡；连续天数按打卡日历自动计算
+    · 点击历史日期可以补卡；进度条和日历高亮只统计「必选」项
   </div>`;
 }
 function renderSyncStatusLine(){
@@ -720,7 +799,6 @@ document.querySelector(".tabbar").addEventListener("click", e=>{
   const b = e.target.closest("button[data-tab]");
   if(!b) return;
   currentTab = b.dataset.tab;
-  if(currentTab === "record"){ const n = new Date(); if(calY === undefined){ calY = n.getFullYear(); calM = n.getMonth(); } }
   renderView();
   window.scrollTo(0,0);
 });
@@ -740,7 +818,7 @@ view.addEventListener("click", e=>{
 
   if(act === "toggle-mod"){
     const day = getDay(selectedDate, true);
-    const st = modState(day, el.dataset.mod);
+    const st = modStateW(day, el.dataset.mod);
     st.done = !st.done;
     st.doneAt = st.done ? Date.now() : 0;
     touch(day);
@@ -769,6 +847,51 @@ view.addEventListener("click", e=>{
     currentTab = "today";
     renderView();
     window.scrollTo(0,0);
+  }
+  /* ----- 打卡项管理 ----- */
+  else if(act === "mod-up" || act === "mod-down"){
+    const items = cfgItems();
+    const i = items.findIndex(m => m.id === el.dataset.id);
+    const j = act === "mod-up" ? i-1 : i+1;
+    if(i < 0 || j < 0 || j >= items.length) return;
+    [items[i], items[j]] = [items[j], items[i]];
+    touchConfig();
+    renderView();
+  }
+  else if(act === "mod-del"){
+    const m = findMod(el.dataset.id);
+    if(!m) return;
+    if(!confirm(`删除打卡项「${m.name}」？\n历史打卡数据会保留在文件里，但不再显示。`)) return;
+    db.modConfig.items = cfgItems().filter(x => x.id !== m.id);
+    touchConfig();
+    renderView();
+  }
+  else if(act === "mod-add"){
+    const inp = document.getElementById("newModInput");
+    const name = inp.value.trim();
+    if(!name) return;
+    cfgItems().push({
+      id:uid(), name, icon:"⭐",
+      color:PALETTE[cfgItems().length % PALETTE.length],
+      required:false,
+      fields:[{ id:uid(), label:"备注", ph:"" }]
+    });
+    touchConfig();
+    renderView();
+  }
+  else if(act === "field-add"){
+    const m = findMod(el.dataset.id);
+    if(!m) return;
+    m.fields.push({ id:uid(), label:"新问题（点这里改名）", ph:"" });
+    touchConfig();
+    renderView();
+  }
+  else if(act === "field-del"){
+    const m = findMod(el.dataset.mod);
+    if(!m) return;
+    m.fields = m.fields.filter(f => f.id !== el.dataset.fid);
+    touchConfig();
+    renderView();
   }
   else if(act === "tpl-add"){ addTemplate(); }
   else if(act === "tpl-del"){
@@ -806,21 +929,32 @@ view.addEventListener("click", e=>{
 });
 
 view.addEventListener("input", e=>{
-  const f = e.target.dataset.field;
-  if(!f) return;
-  const day = getDay(selectedDate, true);
-  const [mod, prop] = f.split(".");
-  modState(day, mod)[prop] = e.target.value;
-  touch(day);
-});
-
-view.addEventListener("keydown", e=>{
-  if(e.key !== "Enter") return;
-  if(e.target.id === "todoInput"){ e.preventDefault(); addTodo(); }
-  if(e.target.id === "tplInput"){ e.preventDefault(); addTemplate(); }
+  const t = e.target;
+  if(t.dataset.field){                       // 今日页：笔记内容
+    const [mid, fid] = t.dataset.field.split(":");
+    const day = getDay(selectedDate, true);
+    modStateW(day, mid).notes[fid] = t.value;
+    touch(day);
+  }else if(t.dataset.medit === "name" || t.dataset.medit === "icon"){  // 设置页：打卡项改名/换图标
+    const m = findMod(t.dataset.id);
+    if(!m) return;
+    if(t.dataset.medit === "name"){ if(t.value.trim()) m.name = t.value.trim(); }
+    else m.icon = t.value.trim() || "⭐";
+    touchConfig();
+  }else if(t.dataset.fedit){                 // 设置页：记录问题改名
+    const [mid, fid] = t.dataset.fedit.split(":");
+    const m = findMod(mid);
+    const f = m && m.fields.find(x => x.id === fid);
+    if(f && t.value.trim()){ f.label = t.value.trim(); touchConfig(); }
+  }
 });
 
 view.addEventListener("change", e=>{
+  if(e.target.dataset && e.target.dataset.medit === "required"){
+    const m = findMod(e.target.dataset.id);
+    if(m){ m.required = e.target.checked; touchConfig(); }
+    return;
+  }
   if(e.target.id !== "importFile") return;
   const file = e.target.files[0];
   if(!file) return;
@@ -836,6 +970,13 @@ view.addEventListener("change", e=>{
     }catch(err){ alert("导入失败：文件不是有效的备份 JSON"); }
   };
   reader.readAsText(file);
+});
+
+view.addEventListener("keydown", e=>{
+  if(e.key !== "Enter") return;
+  if(e.target.id === "todoInput"){ e.preventDefault(); addTodo(); }
+  if(e.target.id === "tplInput"){ e.preventDefault(); addTemplate(); }
+  if(e.target.id === "newModInput"){ e.preventDefault(); const b = view.querySelector('[data-action="mod-add"]'); if(b) b.click(); }
 });
 
 function addTodo(){

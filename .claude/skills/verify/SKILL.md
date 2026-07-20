@@ -24,10 +24,14 @@ const browser = await chromium.launch({
 });
 ```
 
-值得覆盖的流程：4 个打卡按钮切换（`[data-action="toggle-mod"]`）、阅读笔记面板
-（`open-panel` 后填 `[data-field="reading.*"]`）、待办增删勾选、reload 后
-localStorage 持久化、「记录」页日历彩点与连续天数、点历史日期补卡、
-「设置」页每日固定任务。
+值得覆盖的流程：打卡按钮切换（`[data-action="toggle-mod"]`，模块 id 见
+`defaultModConfig()`，默认顺序 fitness/words/longs/reading）、笔记字段
+（`[data-field="模块id:字段id"]`，如 `reading:summary`；多字段模块需先点
+`open-panel`）、必选/选做进度分开统计（`.today-meta` 文案「必选 x/y · 选做 z/w」）、
+「设置」页打卡项管理（`data-medit` 改名/图标/必选，`mod-up/down/del/add`，
+`field-add/del`、`data-fedit` 字段改名，删除有 confirm 弹窗）、待办增删勾选、
+reload 后 localStorage 持久化、旧版 v1 数据（english/fitness 结构）自动迁移、
+「记录」页日历彩点与连续天数、点历史日期补卡、每日固定任务。
 
 ## 注意
 
