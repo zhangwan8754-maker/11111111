@@ -1,13 +1,45 @@
 {
  "dailyTemplates": {
   "items": [],
-  "updatedAt": 0
+  "updatedAt": 1784558327121
  },
  "days": {
   "2026-07-20": {
-   "mods": {},
+   "mods": {
+    "fitness": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "note": ""
+     }
+    },
+    "longs": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "note": ""
+     }
+    },
+    "reading": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "fav": "",
+      "hard": "",
+      "stance": "",
+      "summary": ""
+     }
+    },
+    "words": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "note": ""
+     }
+    }
+   },
    "todos": [],
-   "updatedAt": 0
+   "updatedAt": 1784558327121
   }
  },
  "modConfig": {
