@@ -7,10 +7,10 @@
   "2026-07-20": {
    "mods": {
     "fitness": {
-     "done": false,
-     "doneAt": 0,
+     "done": true,
+     "doneAt": 1784560252510,
      "notes": {
-      "note": ""
+      "note": "练腿"
      }
     },
     "longs": {
@@ -39,7 +39,7 @@
     }
    },
    "todos": [],
-   "updatedAt": 1784560032245
+   "updatedAt": 1784560256898
   }
  },
  "modConfig": {
