@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>每日打卡</title>
-<meta name="theme-color" content="#5b63e8">
+<meta name="theme-color" content="#7a9471">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="每日打卡">
@@ -12,13 +12,16 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
 :root{
-  --bg:#f4f6fb; --card:#ffffff; --text:#1c2230; --sub:#6b7280; --line:#e7eaf1;
-  --primary:#5b63e8;
-  --shadow:0 1px 3px rgba(28,34,48,.06), 0 6px 18px rgba(28,34,48,.05);
+  --bg:#f6f3ec; --card:#fdfcf8; --field:#f0ecdf;
+  --text:#38392f; --sub:#8d867a; --line:#e7e1d2;
+  --primary:#7a9471;
+  --shadow:0 1px 2px rgba(70,64,50,.05), 0 5px 16px rgba(70,64,50,.05);
+  --blob:46% 54% 52% 48% / 48% 46% 54% 52%;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#0f1420; --card:#1a2130; --text:#e8ecf5; --sub:#98a1b3; --line:#2a3245;
+    --bg:#211f1a; --card:#2b2822; --field:#35322a;
+    --text:#eae5d9; --sub:#9d968a; --line:#3b372d;
     --shadow:0 1px 3px rgba(0,0,0,.3);
   }
 }
@@ -26,190 +29,206 @@
 html{font-size:16px;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.55;
-  padding-bottom:calc(76px + env(safe-area-inset-bottom));
+  background:var(--bg); color:var(--text); line-height:1.6;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom));
 }
-.wrap{max-width:680px; margin:0 auto; padding:0 14px;}
+.serif{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;}
+.wrap{max-width:640px; margin:0 auto; padding:0 16px;}
 /* ---------- header ---------- */
-.app-header{
-  position:sticky; top:0; z-index:20; background:var(--bg);
-  padding:14px 0 10px;
-}
+.app-header{position:sticky; top:0; z-index:20; background:var(--bg); padding:16px 0 8px;}
 .app-header .wrap{display:flex; align-items:center; justify-content:space-between;}
-.app-title{font-size:1.2rem; font-weight:700; letter-spacing:.02em;}
+.app-title{font-size:1.05rem; font-weight:600; letter-spacing:.04em;}
 .sync-pill{
-  border:1px solid var(--line); background:var(--card); color:var(--sub);
-  border-radius:999px; padding:6px 12px; font-size:.8rem; cursor:pointer;
-  display:flex; align-items:center; gap:6px; box-shadow:var(--shadow);
+  border:none; background:var(--field); color:var(--sub);
+  border-radius:999px; padding:6px 13px; font-size:.78rem; cursor:pointer;
+  display:flex; align-items:center; gap:6px;
 }
-.sync-pill .dot{width:8px; height:8px; border-radius:50%; background:#9ca3af; flex:none;}
-.sync-pill.ok .dot{background:#10b981;}
-.sync-pill.busy .dot{background:#f59e0b; animation:blink 1s infinite;}
-.sync-pill.err .dot{background:#ef4444;}
+.sync-pill .dot{width:7px; height:7px; border-radius:50%; background:#b0a99b; flex:none;}
+.sync-pill.ok .dot{background:var(--primary);}
+.sync-pill.busy .dot{background:#c8a24b; animation:blink 1s infinite;}
+.sync-pill.err .dot{background:#b56d5e;}
 @keyframes blink{50%{opacity:.3}}
 /* ---------- cards ---------- */
-.section-title{font-size:.85rem; font-weight:600; color:var(--sub); margin:20px 2px 8px; letter-spacing:.06em;}
+.section-title{font-size:.76rem; font-weight:600; color:var(--sub); margin:22px 4px 8px; letter-spacing:.14em;}
 .card{
-  background:var(--card); border-radius:16px; box-shadow:var(--shadow);
-  padding:14px; margin-bottom:10px;
+  background:var(--card); border-radius:22px; box-shadow:var(--shadow);
+  padding:16px; margin-bottom:12px;
 }
-.card-head{display:flex; align-items:center; gap:12px;}
+.card-head{display:flex; align-items:center; gap:13px;}
 .mod-icon{
-  width:42px; height:42px; border-radius:12px; flex:none;
-  display:flex; align-items:center; justify-content:center; font-size:1.3rem;
-  background:color-mix(in srgb, var(--mc) 14%, transparent);
+  width:44px; height:44px; flex:none;
+  display:flex; align-items:center; justify-content:center; font-size:1.25rem;
+  background:color-mix(in srgb, var(--mc) 16%, transparent);
+  border-radius:42% 58% 55% 45% / 50% 44% 56% 50%;
 }
 .card-info{flex:1; min-width:0;}
 .card-title{font-weight:600; font-size:1rem;}
-.card-sub{font-size:.78rem; color:var(--sub); margin-top:1px;}
-.chip{display:inline-block; font-size:.66rem; border-radius:6px; padding:0 6px; margin-left:6px; vertical-align:2px; font-weight:500;}
-.chip.req{background:color-mix(in srgb, var(--mc) 16%, transparent); color:var(--mc);}
-.chip.opt{border:1px solid var(--line); color:var(--sub);}
+.card-sub{font-size:.76rem; color:var(--sub); margin-top:1px;}
+.card-sub .done-t{color:var(--mc);}
+.chip{display:inline-block; font-size:.66rem; margin-left:7px; vertical-align:2px; font-weight:500;}
+.chip.req{color:var(--mc);}
+.chip.opt{color:var(--sub); opacity:.8;}
 .check{
-  width:46px; height:46px; border-radius:50%; flex:none; cursor:pointer;
-  border:2.5px solid var(--mc); background:transparent;
+  width:48px; height:48px; flex:none; cursor:pointer;
+  border:2px solid color-mix(in srgb, var(--mc) 55%, transparent);
+  background:transparent; border-radius:var(--blob);
   display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease;
 }
-.check svg{width:22px; height:22px; fill:none; stroke:var(--mc); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; opacity:.3;}
-.check.done{background:var(--mc); border-color:var(--mc); animation:pop .25s ease;}
+.check svg{width:21px; height:21px; fill:none; stroke:var(--mc); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.35;}
+.check.done{background:var(--mc); border-color:var(--mc); animation:pop .3s ease;}
 .check.done svg{stroke:#fff; opacity:1;}
-@keyframes pop{0%{transform:scale(.85)}55%{transform:scale(1.12)}100%{transform:scale(1)}}
-.note-area{margin-top:10px;}
+@keyframes pop{0%{transform:scale(.85) rotate(-4deg)}55%{transform:scale(1.1) rotate(2deg)}100%{transform:scale(1)}}
+.note-area{margin-top:12px;}
 textarea, input[type=text], input[type=password]{
-  width:100%; border:1px solid var(--line); border-radius:10px;
-  background:var(--bg); color:var(--text); font:inherit; font-size:.9rem;
-  padding:9px 11px; outline:none; resize:vertical;
+  width:100%; border:1px solid transparent; border-radius:14px;
+  background:var(--field); color:var(--text); font:inherit; font-size:.9rem;
+  padding:10px 13px; outline:none; resize:vertical;
 }
-textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:var(--primary);}
-.field-label{font-size:.8rem; color:var(--sub); margin:10px 2px 4px; font-weight:500;}
+textarea::placeholder, input::placeholder{color:color-mix(in srgb, var(--sub) 75%, transparent);}
+textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:var(--primary); background:var(--card);}
+.field-label{font-size:.8rem; color:var(--sub); margin:12px 3px 5px; font-weight:500;}
 .field-label:first-child{margin-top:0;}
 .link-btn{
   background:none; border:none; color:var(--primary); font-size:.82rem; cursor:pointer;
-  padding:8px 2px 0; font-weight:500;
+  padding:10px 3px 0; font-weight:500;
 }
-/* ---------- progress ---------- */
-.today-head{padding:6px 2px 0;}
-.today-date{font-size:1.35rem; font-weight:700;}
-.today-meta{font-size:.82rem; color:var(--sub); margin-top:2px;}
-.progress-bar{height:6px; border-radius:99px; background:var(--line); margin-top:10px; overflow:hidden;}
-.progress-bar i{display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#5b63e8,#8b5cf6); transition:width .3s ease;}
+/* ---------- today head ---------- */
+.today-head{padding:10px 4px 0;}
+.today-date{font-size:1.6rem; font-weight:700; letter-spacing:.01em;}
+.today-date small{font-size:.85rem; font-weight:400; color:var(--sub); margin-left:8px; letter-spacing:.05em;}
+.today-meta{font-size:.8rem; color:var(--sub); margin-top:4px;}
+.today-meta b{color:var(--primary); font-weight:600;}
+.progress-bar{height:4px; border-radius:99px; background:var(--line); margin-top:12px; overflow:hidden;}
+.progress-bar i{display:block; height:100%; border-radius:99px; background:var(--primary); transition:width .35s ease;}
 .banner{
-  background:color-mix(in srgb,#f59e0b 15%,var(--card)); border:1px solid color-mix(in srgb,#f59e0b 40%,transparent);
-  border-radius:12px; padding:10px 12px; font-size:.85rem; margin-top:12px;
+  background:color-mix(in srgb,#c8a24b 13%,var(--card)); border:1px solid color-mix(in srgb,#c8a24b 30%,transparent);
+  border-radius:16px; padding:10px 14px; font-size:.84rem; margin-top:14px;
   display:flex; align-items:center; justify-content:space-between; gap:8px;
 }
-.banner button{border:none; background:#f59e0b; color:#fff; border-radius:8px; padding:6px 10px; font-size:.8rem; cursor:pointer; flex:none;}
+.banner button{border:none; background:#b3944e; color:#fff; border-radius:10px; padding:6px 12px; font-size:.8rem; cursor:pointer; flex:none;}
 /* ---------- todos ---------- */
-.todo-row{display:flex; align-items:center; gap:10px; padding:9px 2px; border-bottom:1px solid var(--line);}
+.todo-row{display:flex; align-items:center; gap:11px; padding:10px 2px; border-bottom:1px solid var(--line);}
 .todo-row:last-of-type{border-bottom:none;}
 .todo-check{
-  width:24px; height:24px; border-radius:8px; border:2px solid #10b981;
+  width:25px; height:25px; border-radius:38% 62% 55% 45% / 50% 42% 58% 50%;
+  border:2px solid color-mix(in srgb, var(--primary) 65%, transparent);
   background:transparent; flex:none; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
 }
-.todo-check svg{width:14px; height:14px; fill:none; stroke:#fff; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; opacity:0;}
-.todo-check.done{background:#10b981;}
+.todo-check svg{width:13px; height:13px; fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; opacity:0;}
+.todo-check.done{background:var(--primary); border-color:var(--primary);}
 .todo-check.done svg{opacity:1;}
-.todo-text{flex:1; font-size:.93rem; word-break:break-all;}
+.todo-text{flex:1; font-size:.92rem; word-break:break-all;}
 .todo-text.done{color:var(--sub); text-decoration:line-through;}
-.todo-tag{font-size:.68rem; color:#10b981; border:1px solid color-mix(in srgb,#10b981 45%,transparent); border-radius:6px; padding:0 5px; flex:none;}
-.todo-del{border:none; background:none; color:var(--sub); font-size:1.05rem; cursor:pointer; padding:4px 6px; flex:none;}
-.todo-add{display:flex; gap:8px; margin-top:10px;}
+.todo-tag{font-size:.66rem; color:var(--primary); flex:none;}
+.todo-del{border:none; background:none; color:var(--sub); font-size:1rem; cursor:pointer; padding:4px 6px; flex:none; opacity:.7;}
+.todo-add{display:flex; gap:8px; margin-top:12px;}
 .todo-add input{flex:1;}
 .btn{
-  border:none; border-radius:10px; background:var(--primary); color:#fff;
-  font:inherit; font-size:.88rem; font-weight:500; padding:9px 16px; cursor:pointer; flex:none;
+  border:none; border-radius:13px; background:var(--primary); color:#fff;
+  font:inherit; font-size:.88rem; font-weight:500; padding:10px 17px; cursor:pointer; flex:none;
 }
-a.btn{display:inline-flex; align-items:center; gap:6px; text-decoration:none; margin-top:10px;}
-.btn.ghost{background:var(--bg); color:var(--text); border:1px solid var(--line);}
+a.btn{display:inline-flex; align-items:center; gap:6px; text-decoration:none; margin-top:12px;}
+.btn.ghost{background:var(--field); color:var(--text);}
 .btn:active{opacity:.8;}
-.hint{font-size:.76rem; color:var(--sub); margin-top:8px;}
+.hint{font-size:.75rem; color:var(--sub); margin-top:9px;}
 .warn-box{
-  font-size:.8rem; margin-top:10px; border-radius:10px; padding:9px 11px;
-  background:color-mix(in srgb,#f59e0b 12%,var(--card)); border:1px solid color-mix(in srgb,#f59e0b 35%,transparent);
+  font-size:.8rem; margin-top:12px; border-radius:14px; padding:10px 13px;
+  background:color-mix(in srgb,#c8a24b 12%,var(--card)); border:1px solid color-mix(in srgb,#c8a24b 28%,transparent);
 }
-.empty{font-size:.85rem; color:var(--sub); padding:8px 2px;}
+.empty{font-size:.84rem; color:var(--sub); padding:6px 2px;}
 /* ---------- module editor ---------- */
-.mod-edit{border:1px solid var(--line); border-radius:12px; padding:10px; margin-top:10px;}
+.mod-edit{border:1px solid var(--line); border-radius:18px; padding:12px; margin-top:12px;}
 .me-row{display:flex; gap:6px; align-items:center;}
-.me-row .me-icon{width:52px; text-align:center; flex:none; padding:7px 4px;}
-.me-row .me-name{flex:1; min-width:0; padding:7px 9px;}
-.me-req{display:flex; align-items:center; gap:4px; font-size:.78rem; color:var(--sub); flex:none; cursor:pointer;}
+.me-row .me-icon{width:50px; text-align:center; flex:none; padding:8px 4px;}
+.me-row .me-name{flex:1; min-width:0; padding:8px 10px;}
+.me-req{display:flex; align-items:center; gap:4px; font-size:.76rem; color:var(--sub); flex:none; cursor:pointer;}
 .me-req input{width:16px; height:16px; accent-color:var(--primary);}
-.me-btn{border:1px solid var(--line); background:var(--bg); color:var(--sub); width:30px; height:30px; border-radius:8px; cursor:pointer; flex:none; font-size:.85rem; padding:0;}
+.me-btn{border:none; background:var(--field); color:var(--sub); width:30px; height:30px; border-radius:10px; cursor:pointer; flex:none; font-size:.85rem; padding:0;}
+.me-btn:disabled{opacity:.35; cursor:default;}
 .me-fields{margin-top:4px;}
-.me-fields-label{font-size:.72rem; color:var(--sub); margin-top:8px;}
+.me-fields-label{font-size:.7rem; color:var(--sub); margin-top:9px;}
 .me-field{display:flex; gap:6px; margin-top:6px;}
-.me-field input{flex:1; font-size:.85rem; padding:6px 9px;}
-/* ---------- stats ---------- */
-.stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-.stat-card{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:12px;}
-.stat-name{font-size:.82rem; color:var(--sub); display:flex; align-items:center; gap:6px;}
-.stat-name .sw{width:9px; height:9px; border-radius:3px; flex:none;}
-.stat-main{font-size:1.25rem; font-weight:700; margin-top:4px;}
-.stat-main small{font-size:.75rem; font-weight:400; color:var(--sub);}
-.stat-sub{font-size:.74rem; color:var(--sub); margin-top:2px;}
+.me-field input{flex:1; font-size:.84rem; padding:7px 10px;}
+/* ---------- week overview ---------- */
+.week-row{display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line);}
+.week-row:last-child{border-bottom:none;}
+.week-row.head{padding:2px 0 8px; border-bottom:1px solid var(--line);}
+.w-name{flex:1; min-width:0; font-size:.88rem; display:flex; align-items:baseline; gap:7px; overflow:hidden;}
+.w-name i{width:8px; height:8px; border-radius:50%; flex:none; align-self:center;}
+.w-name small{color:var(--sub); font-size:.68rem; white-space:nowrap;}
+.w-dots{display:flex; gap:6px; flex:none;}
+.w-dots span{width:15px; height:15px; border-radius:var(--blob); background:var(--line); font-size:.6rem; color:var(--sub); display:flex; align-items:center; justify-content:center;}
+.w-dots span.on{background:var(--mc);}
+.w-dots span.td{box-shadow:0 0 0 1.5px var(--card), 0 0 0 3px var(--primary);}
+.w-dots span.wd{background:none;}
+.w-streak{flex:none; width:46px; text-align:right; font-size:.78rem; color:var(--sub);}
+.w-streak.hot{color:var(--primary); font-weight:600;}
 /* ---------- calendar ---------- */
-.cal-nav{display:flex; align-items:center; justify-content:space-between; padding:4px 2px 10px;}
-.cal-nav b{font-size:1.02rem;}
-.cal-nav button{border:1px solid var(--line); background:var(--card); color:var(--text); width:34px; height:34px; border-radius:10px; font-size:1rem; cursor:pointer;}
-.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
-.cal-wd{text-align:center; font-size:.72rem; color:var(--sub); padding:4px 0;}
+.cal-nav{display:flex; align-items:center; justify-content:space-between; padding:4px 4px 10px;}
+.cal-nav b{font-size:1rem; font-weight:600;}
+.cal-nav button{border:none; background:var(--field); color:var(--text); width:34px; height:34px; border-radius:12px; font-size:1rem; cursor:pointer;}
+.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:5px;}
+.cal-wd{text-align:center; font-size:.7rem; color:var(--sub); padding:4px 0;}
 .cal-cell{
-  aspect-ratio:1/1.05; border-radius:12px; background:var(--card); box-shadow:var(--shadow);
+  aspect-ratio:1/1.02; border-radius:16px; background:var(--card); box-shadow:var(--shadow);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
-  cursor:pointer; border:2px solid transparent; font-size:.85rem; min-width:0;
+  cursor:pointer; border:1.5px solid transparent; font-size:.84rem; min-width:0;
 }
 .cal-cell.blank{background:transparent; box-shadow:none; cursor:default;}
 .cal-cell.today{border-color:var(--primary);}
-.cal-cell.sel{background:color-mix(in srgb,var(--primary) 14%,var(--card));}
+.cal-cell.sel{background:color-mix(in srgb,var(--primary) 13%,var(--card));}
+.cal-cell.full{background:color-mix(in srgb,var(--primary) 10%,var(--card));}
 .cal-cell.full .d{color:var(--primary); font-weight:700;}
 .cal-dots{display:flex; gap:2.5px; height:5px; max-width:90%; overflow:hidden;}
 .cal-dots i{width:5px; height:5px; border-radius:50%; flex:none;}
-.legend{display:flex; flex-wrap:wrap; gap:12px; padding:10px 2px; font-size:.74rem; color:var(--sub);}
+.legend{display:flex; flex-wrap:wrap; gap:12px; padding:10px 4px; font-size:.72rem; color:var(--sub);}
 .legend span{display:flex; align-items:center; gap:4px;}
 .legend i{width:7px; height:7px; border-radius:50%; display:inline-block;}
-.day-detail .row{display:flex; gap:8px; padding:7px 0; border-bottom:1px solid var(--line); font-size:.88rem; align-items:baseline;}
+.day-detail .row{display:flex; gap:8px; padding:7px 0; border-bottom:1px solid var(--line); font-size:.87rem; align-items:baseline;}
 .day-detail .row:last-child{border-bottom:none;}
 .day-detail .st{flex:none; font-weight:600;}
 .day-detail .st.no{color:var(--sub); font-weight:400;}
 .day-detail .nm{flex:none; font-weight:500;}
-.day-detail .tx{color:var(--sub); font-size:.8rem; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.day-detail .tx{color:var(--sub); font-size:.78rem; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 /* ---------- settings ---------- */
-.set-row{display:flex; gap:8px; margin-top:10px;}
+.set-row{display:flex; gap:8px; margin-top:12px;}
 .set-row input{flex:1;}
-.status-line{font-size:.85rem; margin-top:8px;}
-.status-line.err{color:#ef4444;}
-.status-line.ok{color:#10b981;}
-details{margin-top:12px; font-size:.85rem;}
+.status-line{font-size:.84rem; margin-top:9px;}
+.status-line.err{color:#b56d5e;}
+.status-line.ok{color:var(--primary);}
+details{margin-top:12px; font-size:.84rem;}
 details summary{cursor:pointer; color:var(--primary); font-weight:500;}
 details ol{padding-left:20px; margin-top:8px; color:var(--sub);}
 details li{margin-bottom:4px;}
-details code{background:var(--bg); border-radius:5px; padding:1px 5px; font-size:.8em; word-break:break-all;}
+details code, .code{background:var(--field); border-radius:6px; padding:1px 6px; font-size:.8em; word-break:break-all;}
 /* ---------- tabbar ---------- */
 .tabbar{
   position:fixed; left:0; right:0; bottom:0; z-index:30;
-  background:color-mix(in srgb, var(--card) 92%, transparent);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  background:color-mix(in srgb, var(--card) 94%, transparent);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
   border-top:1px solid var(--line);
   padding-bottom:env(safe-area-inset-bottom);
 }
-.tabbar .inner{max-width:680px; margin:0 auto; display:flex;}
+.tabbar .inner{max-width:640px; margin:0 auto; display:flex;}
 .tabbar button{
   flex:1; border:none; background:none; color:var(--sub); cursor:pointer;
-  padding:8px 0 9px; font-size:.72rem; display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:10px 0 13px; font-size:.86rem; letter-spacing:.08em;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
 }
-.tabbar button .ic{font-size:1.25rem; line-height:1.2;}
-.tabbar button.on{color:var(--primary); font-weight:600;}
+.tabbar button::before{content:""; width:5px; height:5px; border-radius:50%; background:transparent;}
+.tabbar button.on{color:var(--text); font-weight:600;}
+.tabbar button.on::before{background:var(--primary);}
 @media (min-width:768px){
   html{font-size:16.5px;}
-  .cal-grid{gap:6px;}
+  .cal-grid{gap:7px;}
 }
 </style>
 </head>
 <body>
 <header class="app-header">
   <div class="wrap">
-    <div class="app-title">每日打卡</div>
+    <div class="app-title serif">每日打卡</div>
     <button class="sync-pill" id="syncPill" title="同步状态，点击进入设置"><span class="dot"></span><span id="syncText">本地模式</span></button>
   </div>
 </header>
@@ -218,9 +237,9 @@ details code{background:var(--bg); border-radius:5px; padding:1px 5px; font-size
 
 <nav class="tabbar">
   <div class="inner">
-    <button data-tab="today" class="on"><span class="ic">✅</span>今日</button>
-    <button data-tab="record"><span class="ic">📅</span>记录</button>
-    <button data-tab="settings"><span class="ic">⚙️</span>设置</button>
+    <button data-tab="today" class="on">今日</button>
+    <button data-tab="record">记录</button>
+    <button data-tab="settings">设置</button>
   </div>
 </nav>
 
@@ -232,24 +251,25 @@ const REPO  = "11111111";
 const DATA_PATH = "data/checkin-data.json";
 const LS_DATA = "daka.data.v1";
 const LS_SET  = "daka.settings.v1";
+const BACKUP_URL = "https://cdn.jsdelivr.net/gh/zhangwan8754-maker/11111111@gh-pages/index.html";
 const WD = ["日","一","二","三","四","五","六"];
-const PALETTE = ["#f59e0b","#8b5cf6","#0d9d97","#3b82f6","#ef4444","#10b981","#ec4899","#6366f1"];
+const PALETTE = ["#c97f5f","#8a9a5b","#c8a24b","#7d9bb0","#a78a92","#7a9471","#b56d5e","#8f9a62"];
 
 /* 默认打卡项：健身（非必选）→ 单词 → 长难句 → 阅读，全部可在“设置”里编辑 */
 function defaultModConfig(){
   return { updatedAt:0, items:[
-    { id:"fitness", name:"健身", icon:"💪", color:"#f59e0b", required:false,
+    { id:"fitness", name:"健身", icon:"💪", color:"#c97f5f", required:false,
       fields:[{ id:"note", label:"训练记录", ph:"今天练了什么？部位 / 时长 / 组数…" }] },
-    { id:"words", name:"单词", icon:"🔤", color:"#8b5cf6", required:true,
+    { id:"words", name:"单词", icon:"🔤", color:"#8a9a5b", required:true,
       fields:[{ id:"note", label:"备注", ph:"今天背了哪些？（可不填）" }] },
-    { id:"longs", name:"长难句", icon:"🧩", color:"#0d9d97", required:true,
+    { id:"longs", name:"长难句", icon:"🧩", color:"#c8a24b", required:true,
       fields:[{ id:"note", label:"备注", ph:"分析了哪句？（可不填）" }] },
-    { id:"reading", name:"阅读", icon:"📖", color:"#3b82f6", required:true,
+    { id:"reading", name:"阅读", icon:"📖", color:"#7d9bb0", required:true,
       fields:[
-        { id:"summary", label:"📄 这篇讲了什么？", ph:"用一两句话概括…" },
-        { id:"stance",  label:"🎯 作者的立场是什么？", ph:"支持 / 反对 / 中立？理由是…" },
-        { id:"hard",    label:"🧗 标出的难句", ph:"抄下让你卡住的句子…" },
-        { id:"fav",     label:"💖 喜欢的句子", ph:"值得摘抄的好句…" }
+        { id:"summary", label:"这篇讲了什么？", ph:"用一两句话概括…" },
+        { id:"stance",  label:"作者的立场是什么？", ph:"支持 / 反对 / 中立？理由是…" },
+        { id:"hard",    label:"标出的难句", ph:"抄下让你卡住的句子…" },
+        { id:"fav",     label:"喜欢的句子", ph:"值得摘抄的好句…" }
       ] }
   ]};
 }
@@ -272,6 +292,7 @@ function todayStr(){ return fmtDate(new Date()); }
 function parseDate(s){ const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
 function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 function dateCN(s){ const d = parseDate(s); return (d.getMonth()+1)+"月"+d.getDate()+"日"; }
+function fmtTime(ts){ return new Date(ts).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit",hour12:false}); }
 
 function sortKeysDeep(x){
   if(Array.isArray(x)) return x.map(sortKeysDeep);
@@ -490,7 +511,7 @@ function setSyncState(s){
   pill.className = "sync-pill " + (s === "off" ? "" : s);
   if(s === "off") txt.textContent = "本地模式";
   else if(s === "busy") txt.textContent = "同步中…";
-  else if(s === "ok") txt.textContent = "已同步 " + new Date(sync.lastOk).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit",hour12:false});
+  else if(s === "ok") txt.textContent = "已同步 " + fmtTime(sync.lastOk);
   else txt.textContent = "同步失败";
   if(currentTab === "settings") renderSyncStatusLine();
 }
@@ -512,21 +533,21 @@ function renderToday(){
   let meta = req.length ? `必选 ${doneReq}/${req.length}` : "";
   if(opt.length) meta += (meta ? " · " : "") + `选做 ${doneOpt}/${opt.length}`;
   if(day.todos.length) meta += ` · 待办 ${todoDone}/${day.todos.length}`;
-  if(req.length && doneReq === req.length) meta += " · 🎉 必选全部完成！";
+  if(req.length && doneReq === req.length) meta += ` · <b>🌿 必选全部完成</b>`;
 
   let html = `
   <div class="today-head">
-    <div class="today-date">${d.getMonth()+1}月${d.getDate()}日 <small style="font-size:.9rem;font-weight:500;color:var(--sub)">星期${WD[d.getDay()]}</small></div>
+    <div class="today-date serif">${d.getMonth()+1}月${d.getDate()}日<small>星期${WD[d.getDay()]}</small></div>
     <div class="today-meta">${meta}</div>
     <div class="progress-bar"><i style="width:${req.length ? doneReq/req.length*100 : 0}%"></i></div>
-    ${!isToday ? `<div class="banner"><span>📌 正在补卡：${dateCN(ds)}</span><button data-action="back-today">回到今天</button></div>` : ""}
+    ${!isToday ? `<div class="banner"><span>正在补卡：${dateCN(ds)}</span><button data-action="back-today">回到今天</button></div>` : ""}
   </div>
 
   <div class="section-title">打 卡</div>`;
 
   items.forEach(m => { html += modCard(day, m); });
 
-  html += `<div class="section-title">今日待办</div>
+  html += `<div class="section-title">待 办</div>
   <div class="card">
     ${day.todos.length ? day.todos.map(t=>`
       <div class="todo-row">
@@ -536,27 +557,30 @@ function renderToday(){
         <span class="todo-text ${t.done?"done":""}">${esc(t.text)}</span>
         ${t.tplId ? `<span class="todo-tag">每日</span>` : ""}
         <button class="todo-del" data-action="todo-del" data-id="${t.id}" aria-label="删除">✕</button>
-      </div>`).join("") : `<div class="empty">今天还没有待办，在下面添加一条吧</div>`}
+      </div>`).join("") : ""}
     <div class="todo-add">
       <input type="text" id="todoInput" placeholder="添加待办，回车确认" enterkeyhint="done">
       <button class="btn" data-action="todo-add">添加</button>
     </div>
-    <div class="hint">想要每天自动出现的固定任务？去「设置」里添加 →</div>
+    ${!day.todos.length ? `<div class="hint">在「设置」里可添加每天自动出现的固定任务</div>` : ""}
   </div>`;
 
   return html;
 }
 function modCard(day, m){
   const st = modState(day, m.id);
+  const stk = streak(m.id);
   const chip = m.required ? `<span class="chip req">必选</span>` : `<span class="chip opt">选做</span>`;
-  const subDone = st.done && st.doneAt ? "✅ 已完成 · " + new Date(st.doneAt).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit",hour12:false}) : "";
+  let sub = "";
+  if(st.done) sub = `<span class="done-t">已完成${st.doneAt ? " " + fmtTime(st.doneAt) : ""}</span>${stk > 1 ? ` · 连续 ${stk} 天` : ""}`;
+  else if(stk > 0) sub = `已连续 ${stk} 天`;
   return `
   <div class="card" style="--mc:${m.color}">
     <div class="card-head">
       <div class="mod-icon">${esc(m.icon)}</div>
       <div class="card-info">
         <div class="card-title">${esc(m.name)}${chip}</div>
-        ${subDone ? `<div class="card-sub">${subDone}</div>` : ""}
+        ${sub ? `<div class="card-sub">${sub}</div>` : ""}
       </div>
       <button class="check ${st.done?"done":""}" data-action="toggle-mod" data-mod="${m.id}" aria-label="${esc(m.name)}打卡">
         <svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>
@@ -574,13 +598,13 @@ function modFields(day, m){
   }
   const hasContent = m.fields.some(f => st.notes[f.id]);
   const open = openPanels.has(m.id) || hasContent;
-  if(!open) return `<button class="link-btn" data-action="open-panel" data-panel="${m.id}">✏️ 写笔记 ▾</button>`;
+  if(!open) return `<button class="link-btn" data-action="open-panel" data-panel="${m.id}">写笔记 ▾</button>`;
   return `<div class="note-area">` + m.fields.map(f=>`
     <div class="field-label">${esc(f.label)}</div>
     <textarea rows="2" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea>`).join("") + `</div>`;
 }
 
-/* ================= 视图：记录（统计+日历） ================= */
+/* ================= 视图：记录（近7天+日历） ================= */
 function streak(id){
   let d = new Date(), n = 0;
   if(!isDone(db.days[fmtDate(d)], id)) d.setDate(d.getDate()-1); // 今天还没打不断签
@@ -591,9 +615,6 @@ function countMonth(id, y, m){
   const prefix = y + "-" + pad(m+1);
   return Object.keys(db.days).filter(k => k.startsWith(prefix) && isDone(db.days[k], id)).length;
 }
-function countTotal(id){
-  return Object.keys(db.days).filter(k => isDone(db.days[k], id)).length;
-}
 function dayFull(dayRaw){
   const req = cfgItems().filter(m => m.required);
   return req.length > 0 && req.every(m => isDone(dayRaw, m.id));
@@ -601,16 +622,27 @@ function dayFull(dayRaw){
 function renderRecord(){
   const now = new Date();
   const items = cfgItems();
-  let html = `<div style="height:6px"></div><div class="stats-grid">`;
-  items.forEach(m=>{
-    html += `
-    <div class="stat-card">
-      <div class="stat-name"><span class="sw" style="background:${m.color}"></span>${esc(m.icon)} ${esc(m.name)}</div>
-      <div class="stat-main">连续 ${streak(m.id)} <small>天</small></div>
-      <div class="stat-sub">本月 ${countMonth(m.id, now.getFullYear(), now.getMonth())} 次 · 累计 ${countTotal(m.id)} 次</div>
-    </div>`;
-  });
-  html += `</div>`;
+  const tds = todayStr();
+  const last7 = [];
+  for(let i = 6; i >= 0; i--){ const d = new Date(); d.setDate(d.getDate()-i); last7.push(fmtDate(d)); }
+
+  let html = `
+  <div class="section-title" style="margin-top:12px">近 7 天</div>
+  <div class="card">
+    <div class="week-row head">
+      <div class="w-name"></div>
+      <div class="w-dots">${last7.map(ds=>`<span class="wd">${WD[parseDate(ds).getDay()]}</span>`).join("")}</div>
+      <div class="w-streak">连续</div>
+    </div>
+    ${items.map(m=>{
+      const stk = streak(m.id);
+      return `
+    <div class="week-row" style="--mc:${m.color}">
+      <div class="w-name"><i style="background:${m.color}"></i>${esc(m.name)}<small>本月 ${countMonth(m.id, now.getFullYear(), now.getMonth())} 次</small></div>
+      <div class="w-dots">${last7.map(ds=>`<span class="${isDone(db.days[ds], m.id)?"on":""}${ds===tds?" td":""}"></span>`).join("")}</div>
+      <div class="w-streak${stk>0?" hot":""}">${stk} 天</div>
+    </div>`;}).join("")}
+  </div>`;
 
   const first = new Date(calY, calM, 1);
   const daysInMonth = new Date(calY, calM+1, 0).getDate();
@@ -625,11 +657,10 @@ function renderRecord(){
   <div class="cal-grid">
     ${["一","二","三","四","五","六","日"].map(w=>`<div class="cal-wd">${w}</div>`).join("")}
     ${'<div class="cal-cell blank"></div>'.repeat(offset)}`;
-  const tds = todayStr();
   for(let i = 1; i <= daysInMonth; i++){
     const ds = calY + "-" + pad(calM+1) + "-" + pad(i);
     const dayRaw = db.days[ds];
-    const dots = items.filter(m => isDone(dayRaw, m.id));
+    const dots = cfgItems().filter(m => isDone(dayRaw, m.id));
     const cls = ["cal-cell"];
     if(ds === tds) cls.push("today");
     if(ds === selectedCalDate) cls.push("sel");
@@ -642,8 +673,8 @@ function renderRecord(){
   }
   html += `</div>
   <div class="legend">
-    ${items.map(m=>`<span><i style="background:${m.color}"></i>${esc(m.name)}</span>`).join("")}
-    <span>· 必选全完成的日子会高亮</span>
+    ${cfgItems().map(m=>`<span><i style="background:${m.color}"></i>${esc(m.name)}</span>`).join("")}
+    <span>· 必选全完成的日子会填色</span>
   </div>`;
 
   html += renderDayDetail(selectedCalDate);
@@ -681,15 +712,15 @@ function renderSettings(){
   const tpls = db.dailyTemplates.items || [];
   const items = cfgItems();
   return `
-  <div style="height:6px"></div>
-  <div class="section-title">☁️ 多设备同步</div>
+  <div style="height:2px"></div>
+  <div class="section-title">多设备同步</div>
   <div class="card">
     <div style="font-size:.85rem; color:var(--sub)">
       配置一次 GitHub Token，手机和电脑的数据就会通过你自己的仓库
       <b style="color:var(--text)">${OWNER}/${REPO}</b> 自动互通。数据只存在你的仓库里，Token 只保存在本设备浏览器中。
     </div>
-    <div class="warn-box">⚠️ 注意：Token 要在你的<b>个人账号设置</b>里创建。如果你看到的是 Deploy keys，说明进了<b>仓库</b>的 Settings，走错地方了——点下面的按钮直达正确页面。</div>
-    <a class="btn" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">🔗 直达 Token 创建页面</a>
+    <div class="warn-box">注意：Token 要在你的<b>个人账号设置</b>里创建。如果你看到的是 Deploy keys，说明进了<b>仓库</b>的 Settings，走错地方了——点下面的按钮直达正确页面。</div>
+    <a class="btn" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">直达 Token 创建页面</a>
     <div class="set-row">
       <input type="password" id="tokenInput" placeholder="粘贴 github_pat_ 开头的 Token" value="${esc(settings.token)}" autocomplete="off">
       <button class="btn ghost" data-action="toggle-token-vis" id="tokenVisBtn">显示</button>
@@ -713,7 +744,7 @@ function renderSettings(){
     </details>
   </div>
 
-  <div class="section-title">🧩 打卡项管理</div>
+  <div class="section-title">打卡项管理</div>
   <div class="card">
     <div style="font-size:.85rem; color:var(--sub)">每个打卡项都可以：改名、换图标（填个表情符号）、勾选是否<b>每日必选</b>、用 ↑↓ 调顺序、✕ 删除。「记录问题」是打卡时要填的笔记栏，同样可以增删改。</div>
     ${items.map((m,i)=>`
@@ -742,9 +773,9 @@ function renderSettings(){
     </div>
   </div>
 
-  <div class="section-title">📌 每日固定任务</div>
+  <div class="section-title">每日固定任务</div>
   <div class="card">
-    <div style="font-size:.85rem; color:var(--sub)">这里添加的任务会每天自动出现在「今日待办」里。</div>
+    <div style="font-size:.85rem; color:var(--sub)">这里添加的任务会每天自动出现在「待办」里。</div>
     ${tpls.length ? tpls.map(t=>`
       <div class="todo-row">
         <span class="todo-tag">每日</span>
@@ -757,7 +788,7 @@ function renderSettings(){
     </div>
   </div>
 
-  <div class="section-title">💾 数据备份</div>
+  <div class="section-title">数据备份</div>
   <div class="card">
     <div class="set-row" style="margin-top:0">
       <button class="btn ghost" data-action="export-data">导出数据 (JSON)</button>
@@ -767,11 +798,15 @@ function renderSettings(){
     <div class="hint">导入时会自动与现有数据合并（按日期取较新的一份），不会整体覆盖。</div>
   </div>
 
-  <div class="section-title">ℹ️ 说明</div>
+  <div class="section-title">说明</div>
   <div class="card" style="font-size:.82rem; color:var(--sub)">
-    · 数据实时保存在本机浏览器，配置同步后另存一份在仓库文件 <code style="background:var(--bg);border-radius:5px;padding:1px 5px">${DATA_PATH}</code><br>
+    · 主网址打不开时（国内网络对 github.io 时常拦截），用备用网址：<br>
+    　<a href="${BACKUP_URL}" style="color:var(--primary); word-break:break-all">${BACKUP_URL}</a><br>
+    　两个网址内容相同；本地数据分开存，但配置同一个 Token 就会通过云端互通<br>
+    · 本页加载成功一次后即支持<b style="color:var(--text)">离线使用</b>，断网也能打开和记录<br>
+    · 数据实时保存在本机浏览器，配置同步后另存一份在仓库文件 <span class="code">${DATA_PATH}</span><br>
     · 手机浏览器打开本页 → 菜单里选「添加到主屏幕」，即可像 App 一样使用<br>
-    · 点击历史日期可以补卡；进度条和日历高亮只统计「必选」项
+    · 点击历史日期可以补卡；进度条和日历填色只统计「必选」项
   </div>`;
 }
 function renderSyncStatusLine(){
@@ -1008,6 +1043,9 @@ document.addEventListener("visibilitychange", ()=>{
   if(!document.hidden && settings.token && Date.now() - sync.lastOk > 60000) doSync();
 });
 window.addEventListener("online", ()=>{ if(settings.token) doSync(); });
+if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 
 loadSettings();
 loadLocal();
