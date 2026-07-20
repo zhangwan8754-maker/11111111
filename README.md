@@ -4,14 +4,20 @@
 
 ## 📱 怎么打开
 
-部署完成后，直接访问：
+**第一次需要手动开启 GitHub Pages（只需一次，约 30 秒）：**
+
+1. 打开本仓库页面 → 点上方 **Settings**
+2. 左侧栏找到 **Pages**
+3. Build and deployment → Source 选 **Deploy from a branch**
+4. Branch 选 **`gh-pages`**，目录保持 **`/ (root)`**，点 **Save**
+5. 等大约 1 分钟，访问：
 
 **https://zhangwan8754-maker.github.io/11111111/**
 
 - **手机**：用浏览器打开上面的网址 → 浏览器菜单 → 「添加到主屏幕」，以后就能像 App 一样从桌面打开。
 - **电脑**：浏览器打开同一个网址，收藏即可。
 
-> 首次推送代码后，GitHub Actions 会自动部署（仓库的 Actions 标签页里可以看到进度），大约 1 分钟后网址生效。
+> 之后每次代码更新，GitHub Actions 会自动把网站发布到 `gh-pages` 分支，无需再做任何操作。
 
 ## ✨ 功能
 
