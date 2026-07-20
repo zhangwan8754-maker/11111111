@@ -44,13 +44,13 @@
   "2026-07-21": {
    "mods": {
     "fitness": {
-     "done": true,
-     "doneAt": 1784591010619,
+     "done": false,
+     "doneAt": 0,
      "notes": {}
     }
    },
    "todos": [],
-   "updatedAt": 1784591010619
+   "updatedAt": 1784591011451
   }
  },
  "modConfig": {
