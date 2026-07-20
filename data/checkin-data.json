@@ -50,7 +50,7 @@
  "modConfig": {
   "items": [
    {
-    "color": "#f59e0b",
+    "color": "#c97f5f",
     "fields": [
      {
       "id": "note",
@@ -58,13 +58,13 @@
       "ph": "今天练了什么？部位 / 时长 / 组数…"
      }
     ],
-    "icon": "💪",
+    "icon": "⭐",
     "id": "fitness",
     "name": "健身",
     "required": false
    },
    {
-    "color": "#8b5cf6",
+    "color": "#8a9a5b",
     "fields": [
      {
       "id": "note",
@@ -72,13 +72,13 @@
       "ph": "今天背了哪些？（可不填）"
      }
     ],
-    "icon": "🔤",
+    "icon": "⭐",
     "id": "words",
     "name": "单词",
     "required": true
    },
    {
-    "color": "#0d9d97",
+    "color": "#c8a24b",
     "fields": [
      {
       "id": "note",
@@ -86,42 +86,42 @@
       "ph": "分析了哪句？（可不填）"
      }
     ],
-    "icon": "🧩",
+    "icon": "⭐",
     "id": "longs",
     "name": "长难句",
     "required": true
    },
    {
-    "color": "#3b82f6",
+    "color": "#7d9bb0",
     "fields": [
      {
       "id": "summary",
-      "label": "📄 这篇讲了什么？",
+      "label": "这篇讲了什么？",
       "ph": "用一两句话概括…"
      },
      {
       "id": "stance",
-      "label": "🎯 作者的立场是什么？",
+      "label": "作者的立场是什么？",
       "ph": "支持 / 反对 / 中立？理由是…"
      },
      {
       "id": "hard",
-      "label": "🧗 标出的难句",
+      "label": "标出的难句",
       "ph": "抄下让你卡住的句子…"
      },
      {
       "id": "fav",
-      "label": "💖 喜欢的句子",
+      "label": "喜欢的句子",
       "ph": "值得摘抄的好句…"
      }
     ],
-    "icon": "📖",
+    "icon": "⭐",
     "id": "reading",
     "name": "阅读",
     "required": true
    }
   ],
-  "updatedAt": 0
+  "updatedAt": 1784590076710
  },
  "version": 2
 }
