@@ -42,9 +42,15 @@
    "updatedAt": 1784560256898
   },
   "2026-07-21": {
-   "mods": {},
+   "mods": {
+    "fitness": {
+     "done": true,
+     "doneAt": 1784591007704,
+     "notes": {}
+    }
+   },
    "todos": [],
-   "updatedAt": 0
+   "updatedAt": 1784591007704
   }
  },
  "modConfig": {
