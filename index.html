@@ -342,17 +342,26 @@ function normalizeDay(d){
   }
   return e;
 }
+/* 旧版亮色 → 大地色系（仅迁移旧默认色，用户自定义的颜色不受影响） */
+const COLOR_MIGRATE = {
+  "#f59e0b":"#c97f5f", "#8b5cf6":"#8a9a5b", "#0d9d97":"#c8a24b", "#3b82f6":"#7d9bb0",
+  "#ef4444":"#b56d5e", "#10b981":"#7a9471", "#ec4899":"#a78a92", "#6366f1":"#8f9a62"
+};
 function normalizeConfig(c){
   const def = defaultModConfig();
-  if(!c || typeof c !== "object" || !Array.isArray(c.items) || !c.items.length) return def;
-  const items = c.items.filter(m => m && m.id && m.name).map((m,i)=>({
-    id:String(m.id), name:String(m.name), icon:String(m.icon||"⭐"),
-    color:String(m.color || PALETTE[i % PALETTE.length]), required:!!m.required,
-    fields:(Array.isArray(m.fields) ? m.fields : []).filter(f => f && f.id).map(f=>({
-      id:String(f.id), label:String(f.label||"备注"), ph:String(f.ph||"")
-    }))
-  }));
-  return items.length ? { updatedAt:c.updatedAt||0, items } : def;
+  // 从未自定义过（updatedAt=0）→ 直接采用最新默认配置
+  if(!c || typeof c !== "object" || !(c.updatedAt > 0) || !Array.isArray(c.items) || !c.items.length) return def;
+  const items = c.items.filter(m => m && m.id && m.name).map((m,i)=>{
+    const color = String(m.color || PALETTE[i % PALETTE.length]);
+    return {
+      id:String(m.id), name:String(m.name), icon:String(m.icon||"⭐"),
+      color:COLOR_MIGRATE[color] || color, required:!!m.required,
+      fields:(Array.isArray(m.fields) ? m.fields : []).filter(f => f && f.id).map(f=>({
+        id:String(f.id), label:String(f.label||"备注"), ph:String(f.ph||"")
+      }))
+    };
+  });
+  return items.length ? { updatedAt:c.updatedAt, items } : def;
 }
 function normalizeDb(x){
   const out = { version:2, days:{}, dailyTemplates:{ updatedAt:0, items:[] }, modConfig:defaultModConfig() };
