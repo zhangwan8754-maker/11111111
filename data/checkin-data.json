@@ -1,0 +1,155 @@
+{
+ "dailyTemplates": {
+  "items": [],
+  "updatedAt": 1784558327121
+ },
+ "days": {
+  "2026-07-20": {
+   "mods": {
+    "fitness": {
+     "done": true,
+     "doneAt": 1784560252510,
+     "notes": {
+      "note": "练腿"
+     }
+    },
+    "longs": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "note": ""
+     }
+    },
+    "reading": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "fav": "",
+      "hard": "",
+      "stance": "",
+      "summary": ""
+     }
+    },
+    "words": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {
+      "note": ""
+     }
+    }
+   },
+   "todos": [],
+   "updatedAt": 1784560256898
+  },
+  "2026-07-21": {
+   "mods": {
+    "fitness": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    },
+    "longs": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    },
+    "reading": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    },
+    "words": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    }
+   },
+   "todos": [],
+   "updatedAt": 1784619835713
+  }
+ },
+ "modConfig": {
+  "items": [
+   {
+    "color": "#bf3b26",
+    "fields": [
+     {
+      "id": "note",
+      "label": "训练记录",
+      "ph": "今天练了什么？部位 / 时长 / 组数…",
+      "style": "text"
+     }
+    ],
+    "icon": "",
+    "id": "fitness",
+    "name": "健身",
+    "required": false
+   },
+   {
+    "color": "#b0742e",
+    "fields": [
+     {
+      "id": "note",
+      "label": "备注",
+      "ph": "今天背了哪些？（可不填）",
+      "style": "text"
+     }
+    ],
+    "icon": "",
+    "id": "words",
+    "name": "单词",
+    "required": true
+   },
+   {
+    "color": "#8a7a35",
+    "fields": [
+     {
+      "id": "note",
+      "label": "备注",
+      "ph": "分析了哪句？（可不填）",
+      "style": "text"
+     }
+    ],
+    "icon": "",
+    "id": "longs",
+    "name": "长难句",
+    "required": true
+   },
+   {
+    "color": "#4d7a86",
+    "fields": [
+     {
+      "id": "summary",
+      "label": "这篇讲了什么？",
+      "ph": "用一两句话概括…",
+      "style": "text"
+     },
+     {
+      "id": "stance",
+      "label": "作者的立场是什么？",
+      "ph": "支持 / 反对 / 中立？理由是…",
+      "style": "text"
+     },
+     {
+      "id": "hard",
+      "label": "标出的难句",
+      "ph": "抄下让你卡住的句子…",
+      "style": "text"
+     },
+     {
+      "id": "fav",
+      "label": "喜欢的句子",
+      "ph": "值得摘抄的好句…",
+      "style": "text"
+     }
+    ],
+    "icon": "",
+    "id": "reading",
+    "name": "阅读",
+    "required": true
+   }
+  ],
+  "updatedAt": 1784619802503
+ },
+ "version": 2
+}
