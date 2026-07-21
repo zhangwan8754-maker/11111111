@@ -24,14 +24,16 @@ const browser = await chromium.launch({
 });
 ```
 
-值得覆盖的流程：打卡按钮切换（`[data-action="toggle-mod"]`，模块 id 见
-`defaultModConfig()`，默认顺序 fitness/words/longs/reading）、笔记字段
-（`[data-field="模块id:字段id"]`，如 `reading:summary`；多字段模块需先点
-`open-panel`）、必选/选做进度分开统计（`.today-meta` 文案「必选 x/y · 选做 z/w」）、
-「设置」页打卡项管理（`data-medit` 改名/图标/必选，`mod-up/down/del/add`，
-`field-add/del`、`data-fedit` 字段改名，删除有 confirm 弹窗）、待办增删勾选、
-reload 后 localStorage 持久化、旧版 v1 数据（english/fitness 结构）自动迁移、
-「记录」页日历彩点与连续天数、点历史日期补卡、每日固定任务。
+纸面日志（方向A）风格。值得覆盖的流程：打卡按钮切换（`[data-action="toggle-mod"]`，
+模块 id 见 `defaultModConfig()`，默认顺序 fitness/words/longs/reading）、笔记字段
+**始终内联可见**（`textarea.jinput`，`[data-field="模块id:字段id"]`，如 `reading:summary`，
+无 open-panel）、引用体字段（`textarea.jinput.quote`，难句/好句默认，设置里
+`field-style` 切换）、纸面页头（`.stamp` 连续天数印章、`.week-strip` 7天全天条、
+`.ph-full` 庆祝语）、必选/选做进度（`.today-meta`）、textarea 自动增高（autoGrow）、
+「设置」页打卡项管理（`data-medit`、`mod-up/down/del/add`、`field-add/del/style`、
+`data-fedit`，删除有 confirm）、待办增删勾选、reload 持久化、旧版 v1 数据自动迁移、
+未自定义配置(updatedAt=0)自动升级到新模板、「记录」页近7天(`.week-card-row`)+日历、
+点历史日期补卡、每日固定任务。字体用系统衬线栈（无外部字体，兼顾离线/国内）。
 
 ## 注意
 

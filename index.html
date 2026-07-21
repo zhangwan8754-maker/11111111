@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>每日打卡</title>
-<meta name="theme-color" content="#7a9471">
+<meta name="theme-color" content="#f2ede1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="每日打卡">
@@ -12,16 +12,19 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
 :root{
-  --bg:#f6f3ec; --card:#fdfcf8; --field:#f0ecdf;
-  --text:#38392f; --sub:#8d867a; --line:#e7e1d2;
-  --primary:#7a9471;
-  --shadow:0 1px 2px rgba(70,64,50,.05), 0 5px 16px rgba(70,64,50,.05);
-  --blob:46% 54% 52% 48% / 48% 46% 54% 52%;
+  --bg:#efe9dc; --card:#fffdf6; --paper:#f7f2e8; --field:#f4eede;
+  --ink:#2a241c; --ink2:#6b6154; --muted:#8d8272;
+  --line:rgba(70,58,40,.14); --dash:rgba(70,58,40,.22);
+  --brick:#bf3b26;
+  --shadow:0 1px 2px rgba(70,58,40,.05), 0 6px 18px rgba(70,58,40,.05);
+  --serif:Georgia,"Songti SC","Noto Serif SC","Source Han Serif SC",STSong,serif;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#211f1a; --card:#2b2822; --field:#35322a;
-    --text:#eae5d9; --sub:#9d968a; --line:#3b372d;
+    --bg:#211d17; --card:#2a251d; --paper:#272219; --field:#332d22;
+    --ink:#ece4d5; --ink2:#b8ad9a; --muted:#9a8f7c;
+    --line:rgba(255,240,210,.10); --dash:rgba(255,240,210,.17);
+    --brick:#d9694f;
     --shadow:0 1px 3px rgba(0,0,0,.3);
   }
 }
@@ -29,206 +32,221 @@
 html{font-size:16px;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.6;
+  background:var(--bg); color:var(--ink); line-height:1.6;
   padding-bottom:calc(78px + env(safe-area-inset-bottom));
 }
-.serif{font-family:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;}
+.serif{font-family:var(--serif);}
 .wrap{max-width:640px; margin:0 auto; padding:0 16px;}
 /* ---------- header ---------- */
-.app-header{position:sticky; top:0; z-index:20; background:var(--bg); padding:16px 0 8px;}
+.app-header{position:sticky; top:0; z-index:20; background:var(--bg); padding:14px 0 8px;}
 .app-header .wrap{display:flex; align-items:center; justify-content:space-between;}
-.app-title{font-size:1.05rem; font-weight:600; letter-spacing:.04em;}
+.app-brand{font-family:var(--serif); font-size:1.02rem; font-weight:700; letter-spacing:.14em;}
 .sync-pill{
-  border:none; background:var(--field); color:var(--sub);
-  border-radius:999px; padding:6px 13px; font-size:.78rem; cursor:pointer;
+  border:none; background:var(--card); color:var(--muted); box-shadow:var(--shadow);
+  border-radius:999px; padding:6px 13px; font-size:.76rem; cursor:pointer;
   display:flex; align-items:center; gap:6px;
 }
 .sync-pill .dot{width:7px; height:7px; border-radius:50%; background:#b0a99b; flex:none;}
-.sync-pill.ok .dot{background:var(--primary);}
+.sync-pill.ok .dot{background:#5f8a4e;}
 .sync-pill.busy .dot{background:#c8a24b; animation:blink 1s infinite;}
-.sync-pill.err .dot{background:#b56d5e;}
+.sync-pill.err .dot{background:var(--brick);}
 @keyframes blink{50%{opacity:.3}}
-/* ---------- cards ---------- */
-.section-title{font-size:.76rem; font-weight:600; color:var(--sub); margin:22px 4px 8px; letter-spacing:.14em;}
-.card{
-  background:var(--card); border-radius:22px; box-shadow:var(--shadow);
-  padding:16px; margin-bottom:12px;
+/* ---------- paper header (today) ---------- */
+.paper-head{
+  background:var(--paper); border:1px solid var(--line); border-radius:20px;
+  box-shadow:var(--shadow); padding:20px 20px 18px; margin-top:6px;
 }
-.card-head{display:flex; align-items:center; gap:13px;}
-.mod-icon{
-  width:44px; height:44px; flex:none;
-  display:flex; align-items:center; justify-content:center; font-size:1.25rem;
-  background:color-mix(in srgb, var(--mc) 16%, transparent);
-  border-radius:42% 58% 55% 45% / 50% 44% 56% 50%;
+.ph-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px;}
+.ph-title{font-family:var(--serif); font-size:1.7rem; font-weight:700; letter-spacing:.06em;}
+.ph-date{font-size:.82rem; color:var(--muted); margin-top:5px; letter-spacing:.04em;}
+.stamp{
+  font-family:var(--serif); font-weight:700; font-size:.82rem; letter-spacing:.04em;
+  color:var(--brick); border:2px solid var(--brick); border-radius:9px;
+  padding:6px 12px; transform:rotate(-3deg); white-space:nowrap; flex:none; margin-top:2px;
+  line-height:1.15; text-align:center;
 }
+.stamp small{display:block; font-size:.62rem; font-weight:400; letter-spacing:.1em; opacity:.85;}
+.stamp.zero{color:var(--muted); border-color:var(--dash);}
+.week-strip{display:flex; gap:6px; margin-top:16px;}
+.week-strip .wd{flex:1; text-align:center;}
+.week-strip .wd .n{font-size:.62rem; color:var(--muted);}
+.week-strip .wd .o{width:9px; height:9px; border-radius:50%; margin:4px auto 0; border:1.5px solid var(--dash); box-sizing:border-box;}
+.week-strip .wd.on .o{background:var(--brick); border-color:var(--brick);}
+.week-strip .wd.today .n{color:var(--brick); font-weight:700;}
+.ph-prog{display:flex; align-items:center; gap:11px; margin-top:15px;}
+.ph-prog .lab{font-size:.8rem; color:var(--muted); flex:none;}
+.ph-prog .lab b{color:var(--ink); font-weight:700;}
+.ph-prog .bar{flex:1; height:5px; border-radius:99px; background:rgba(70,58,40,.12); overflow:hidden;}
+.ph-prog .bar i{display:block; height:100%; border-radius:99px; background:var(--brick); transition:width .35s ease;}
+.ph-full{margin-top:12px; font-family:var(--serif); font-size:.86rem; color:var(--brick); text-align:center; letter-spacing:.04em;}
+.banner{
+  background:color-mix(in srgb,var(--brick) 10%,var(--paper)); border:1px solid color-mix(in srgb,var(--brick) 30%,transparent);
+  border-radius:13px; padding:9px 13px; font-size:.83rem; margin-top:14px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.banner button{border:none; background:var(--brick); color:#fff; border-radius:9px; padding:6px 11px; font-size:.79rem; cursor:pointer; flex:none;}
+/* ---------- section divider ---------- */
+.divider{display:flex; align-items:baseline; gap:12px; margin:24px 4px 12px;}
+.divider .t{font-family:var(--serif); font-size:.98rem; font-weight:700; letter-spacing:.14em;}
+.divider .line{flex:1; border-top:1px solid var(--line);}
+.divider .h{font-size:.72rem; color:var(--muted); flex:none;}
+.section-title{font-family:var(--serif); font-size:.95rem; font-weight:700; color:var(--ink); margin:24px 4px 12px; letter-spacing:.12em;}
+/* ---------- journal / module card ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:15px 17px; margin-bottom:11px;}
+.jc-head{display:flex; align-items:flex-start; gap:12px;}
 .card-info{flex:1; min-width:0;}
-.card-title{font-weight:600; font-size:1rem;}
-.card-sub{font-size:.76rem; color:var(--sub); margin-top:1px;}
+.card-title{font-family:var(--serif); font-weight:700; font-size:1.06rem; display:flex; align-items:center; gap:7px; flex-wrap:wrap;}
+.card-title .ico{font-size:.95rem;}
+.card-sub{font-size:.76rem; color:var(--muted); margin-top:3px;}
 .card-sub .done-t{color:var(--mc);}
-.chip{display:inline-block; font-size:.66rem; margin-left:7px; vertical-align:2px; font-weight:500;}
-.chip.req{color:var(--mc);}
-.chip.opt{color:var(--sub); opacity:.8;}
+.chip{font-size:.64rem; font-weight:600; letter-spacing:.05em; padding:1px 7px; border-radius:6px;}
+.chip.req{color:var(--mc); background:color-mix(in srgb,var(--mc) 14%,transparent);}
+.chip.opt{color:var(--muted); border:1px solid var(--line);}
 .check{
-  width:48px; height:48px; flex:none; cursor:pointer;
-  border:2px solid color-mix(in srgb, var(--mc) 55%, transparent);
-  background:transparent; border-radius:var(--blob);
-  display:flex; align-items:center; justify-content:center;
-  transition:transform .15s ease;
+  width:46px; height:46px; flex:none; cursor:pointer; margin-top:1px;
+  border:2px solid color-mix(in srgb,var(--mc) 55%,transparent);
+  background:transparent; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; transition:transform .15s ease;
 }
-.check svg{width:21px; height:21px; fill:none; stroke:var(--mc); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.35;}
+.check svg{width:20px; height:20px; fill:none; stroke:var(--mc); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; opacity:.32;}
 .check.done{background:var(--mc); border-color:var(--mc); animation:pop .3s ease;}
 .check.done svg{stroke:#fff; opacity:1;}
 @keyframes pop{0%{transform:scale(.85) rotate(-4deg)}55%{transform:scale(1.1) rotate(2deg)}100%{transform:scale(1)}}
-.note-area{margin-top:12px;}
-textarea, input[type=text], input[type=password]{
-  width:100%; border:1px solid transparent; border-radius:14px;
-  background:var(--field); color:var(--text); font:inherit; font-size:.9rem;
-  padding:10px 13px; outline:none; resize:vertical;
+.jc-body{margin-top:13px;}
+.jrow{padding:11px 0 3px; border-top:1px dashed var(--dash);}
+.jrow:first-child{border-top:none; padding-top:3px;}
+.jlabel{font-size:.75rem; color:var(--muted); letter-spacing:.08em; margin-bottom:5px; display:flex; align-items:center; gap:6px;}
+textarea.jinput, input[type=text], input[type=password]{
+  width:100%; border:1px solid transparent; border-radius:11px;
+  background:var(--field); color:var(--ink); font:inherit; font-size:.92rem;
+  padding:9px 12px; outline:none; resize:none; overflow:hidden;
 }
-textarea::placeholder, input::placeholder{color:color-mix(in srgb, var(--sub) 75%, transparent);}
-textarea:focus, input[type=text]:focus, input[type=password]:focus{border-color:var(--primary); background:var(--card);}
-.field-label{font-size:.8rem; color:var(--sub); margin:12px 3px 5px; font-weight:500;}
-.field-label:first-child{margin-top:0;}
-.link-btn{
-  background:none; border:none; color:var(--primary); font-size:.82rem; cursor:pointer;
-  padding:10px 3px 0; font-weight:500;
+textarea.jinput{min-height:40px; line-height:1.65;}
+textarea::placeholder, input::placeholder{color:color-mix(in srgb,var(--muted) 70%,transparent);}
+textarea.jinput:focus, input[type=text]:focus, input[type=password]:focus{border-color:color-mix(in srgb,var(--mc,var(--brick)) 55%,transparent); background:var(--card);}
+textarea.jinput.quote{
+  font-family:var(--serif); font-style:italic; font-size:.95rem;
+  border-left:3px solid var(--mc); border-radius:0 11px 11px 0; background:color-mix(in srgb,var(--mc) 6%,var(--field));
 }
-/* ---------- today head ---------- */
-.today-head{padding:10px 4px 0;}
-.today-date{font-size:1.6rem; font-weight:700; letter-spacing:.01em;}
-.today-date small{font-size:.85rem; font-weight:400; color:var(--sub); margin-left:8px; letter-spacing:.05em;}
-.today-meta{font-size:.8rem; color:var(--sub); margin-top:4px;}
-.today-meta b{color:var(--primary); font-weight:600;}
-.progress-bar{height:4px; border-radius:99px; background:var(--line); margin-top:12px; overflow:hidden;}
-.progress-bar i{display:block; height:100%; border-radius:99px; background:var(--primary); transition:width .35s ease;}
-.banner{
-  background:color-mix(in srgb,#c8a24b 13%,var(--card)); border:1px solid color-mix(in srgb,#c8a24b 30%,transparent);
-  border-radius:16px; padding:10px 14px; font-size:.84rem; margin-top:14px;
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
-}
-.banner button{border:none; background:#b3944e; color:#fff; border-radius:10px; padding:6px 12px; font-size:.8rem; cursor:pointer; flex:none;}
 /* ---------- todos ---------- */
 .todo-row{display:flex; align-items:center; gap:11px; padding:10px 2px; border-bottom:1px solid var(--line);}
 .todo-row:last-of-type{border-bottom:none;}
 .todo-check{
-  width:25px; height:25px; border-radius:38% 62% 55% 45% / 50% 42% 58% 50%;
-  border:2px solid color-mix(in srgb, var(--primary) 65%, transparent);
+  width:24px; height:24px; border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--brick) 60%,transparent);
   background:transparent; flex:none; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
 }
 .todo-check svg{width:13px; height:13px; fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; opacity:0;}
-.todo-check.done{background:var(--primary); border-color:var(--primary);}
+.todo-check.done{background:var(--brick); border-color:var(--brick);}
 .todo-check.done svg{opacity:1;}
 .todo-text{flex:1; font-size:.92rem; word-break:break-all;}
-.todo-text.done{color:var(--sub); text-decoration:line-through;}
-.todo-tag{font-size:.66rem; color:var(--primary); flex:none;}
-.todo-del{border:none; background:none; color:var(--sub); font-size:1rem; cursor:pointer; padding:4px 6px; flex:none; opacity:.7;}
+.todo-text.done{color:var(--muted); text-decoration:line-through;}
+.todo-tag{font-size:.66rem; color:var(--brick); flex:none;}
+.todo-del{border:none; background:none; color:var(--muted); font-size:1rem; cursor:pointer; padding:4px 6px; flex:none; opacity:.7;}
 .todo-add{display:flex; gap:8px; margin-top:12px;}
 .todo-add input{flex:1;}
 .btn{
-  border:none; border-radius:13px; background:var(--primary); color:#fff;
+  border:none; border-radius:12px; background:var(--brick); color:#fff;
   font:inherit; font-size:.88rem; font-weight:500; padding:10px 17px; cursor:pointer; flex:none;
 }
 a.btn{display:inline-flex; align-items:center; gap:6px; text-decoration:none; margin-top:12px;}
-.btn.ghost{background:var(--field); color:var(--text);}
+.btn.ghost{background:var(--field); color:var(--ink);}
 .btn:active{opacity:.8;}
-.hint{font-size:.75rem; color:var(--sub); margin-top:9px;}
+.hint{font-size:.75rem; color:var(--muted); margin-top:9px;}
 .warn-box{
-  font-size:.8rem; margin-top:12px; border-radius:14px; padding:10px 13px;
-  background:color-mix(in srgb,#c8a24b 12%,var(--card)); border:1px solid color-mix(in srgb,#c8a24b 28%,transparent);
+  font-size:.8rem; margin-top:12px; border-radius:13px; padding:10px 13px;
+  background:color-mix(in srgb,#c8a24b 12%,var(--card)); border:1px solid color-mix(in srgb,#c8a24b 30%,transparent);
 }
-.empty{font-size:.84rem; color:var(--sub); padding:6px 2px;}
+.empty{font-size:.84rem; color:var(--muted); padding:6px 2px;}
 /* ---------- module editor ---------- */
-.mod-edit{border:1px solid var(--line); border-radius:18px; padding:12px; margin-top:12px;}
+.mod-edit{border:1px solid var(--line); border-radius:15px; padding:12px; margin-top:12px;}
 .me-row{display:flex; gap:6px; align-items:center;}
-.me-row .me-icon{width:50px; text-align:center; flex:none; padding:8px 4px;}
+.me-row .me-icon{width:48px; text-align:center; flex:none; padding:8px 4px;}
 .me-row .me-name{flex:1; min-width:0; padding:8px 10px;}
-.me-req{display:flex; align-items:center; gap:4px; font-size:.76rem; color:var(--sub); flex:none; cursor:pointer;}
-.me-req input{width:16px; height:16px; accent-color:var(--primary);}
-.me-btn{border:none; background:var(--field); color:var(--sub); width:30px; height:30px; border-radius:10px; cursor:pointer; flex:none; font-size:.85rem; padding:0;}
+.me-req{display:flex; align-items:center; gap:4px; font-size:.76rem; color:var(--muted); flex:none; cursor:pointer;}
+.me-req input{width:16px; height:16px; accent-color:var(--brick);}
+.me-btn{border:none; background:var(--field); color:var(--muted); min-width:30px; height:30px; border-radius:9px; cursor:pointer; flex:none; font-size:.82rem; padding:0 6px;}
 .me-btn:disabled{opacity:.35; cursor:default;}
+.me-btn.on{background:var(--brick); color:#fff;}
 .me-fields{margin-top:4px;}
-.me-fields-label{font-size:.7rem; color:var(--sub); margin-top:9px;}
-.me-field{display:flex; gap:6px; margin-top:6px;}
+.me-fields-label{font-size:.7rem; color:var(--muted); margin-top:9px;}
+.me-field{display:flex; gap:6px; margin-top:6px; align-items:center;}
 .me-field input{flex:1; font-size:.84rem; padding:7px 10px;}
-/* ---------- week overview ---------- */
-.week-row{display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line);}
-.week-row:last-child{border-bottom:none;}
-.week-row.head{padding:2px 0 8px; border-bottom:1px solid var(--line);}
-.w-name{flex:1; min-width:0; font-size:.88rem; display:flex; align-items:baseline; gap:7px; overflow:hidden;}
-.w-name i{width:8px; height:8px; border-radius:50%; flex:none; align-self:center;}
-.w-name small{color:var(--sub); font-size:.68rem; white-space:nowrap;}
+/* ---------- record: last-7 ---------- */
+.week-card-row{display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px dashed var(--dash);}
+.week-card-row:first-child{border-top:none;}
+.week-card-row.head{padding:2px 0 9px; border-top:none;}
+.w-name{flex:1; min-width:0; font-size:.9rem; display:flex; align-items:center; gap:7px; overflow:hidden;}
+.w-name i{width:8px; height:8px; border-radius:50%; flex:none;}
+.w-name small{color:var(--muted); font-size:.68rem; white-space:nowrap; margin-left:auto; padding-left:6px;}
 .w-dots{display:flex; gap:6px; flex:none;}
-.w-dots span{width:15px; height:15px; border-radius:var(--blob); background:var(--line); font-size:.6rem; color:var(--sub); display:flex; align-items:center; justify-content:center;}
-.w-dots span.on{background:var(--mc);}
-.w-dots span.td{box-shadow:0 0 0 1.5px var(--card), 0 0 0 3px var(--primary);}
-.w-dots span.wd{background:none;}
-.w-streak{flex:none; width:46px; text-align:right; font-size:.78rem; color:var(--sub);}
-.w-streak.hot{color:var(--primary); font-weight:600;}
+.w-dots span{width:15px; height:15px; border-radius:50%; border:1.5px solid var(--dash); box-sizing:border-box; font-size:.6rem; color:var(--muted); display:flex; align-items:center; justify-content:center;}
+.w-dots span.on{background:var(--mc); border-color:var(--mc);}
+.w-dots span.td{box-shadow:0 0 0 1.5px var(--card),0 0 0 3px var(--brick);}
+.w-hd{font-size:.68rem; color:var(--muted); width:15px; text-align:center; flex:none;}
+.w-streak{flex:none; width:48px; text-align:right; font-size:.78rem; color:var(--muted);}
+.w-streak.hot{color:var(--brick); font-weight:700; font-family:var(--serif);}
 /* ---------- calendar ---------- */
 .cal-nav{display:flex; align-items:center; justify-content:space-between; padding:4px 4px 10px;}
-.cal-nav b{font-size:1rem; font-weight:600;}
-.cal-nav button{border:none; background:var(--field); color:var(--text); width:34px; height:34px; border-radius:12px; font-size:1rem; cursor:pointer;}
+.cal-nav b{font-family:var(--serif); font-size:1rem; font-weight:700;}
+.cal-nav button{border:none; background:var(--field); color:var(--ink); width:34px; height:34px; border-radius:11px; font-size:1rem; cursor:pointer;}
 .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:5px;}
-.cal-wd{text-align:center; font-size:.7rem; color:var(--sub); padding:4px 0;}
+.cal-wd{text-align:center; font-size:.7rem; color:var(--muted); padding:4px 0;}
 .cal-cell{
-  aspect-ratio:1/1.02; border-radius:16px; background:var(--card); box-shadow:var(--shadow);
+  aspect-ratio:1/1.02; border-radius:13px; background:var(--card); border:1px solid var(--line);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
-  cursor:pointer; border:1.5px solid transparent; font-size:.84rem; min-width:0;
+  cursor:pointer; font-size:.84rem; min-width:0;
 }
-.cal-cell.blank{background:transparent; box-shadow:none; cursor:default;}
-.cal-cell.today{border-color:var(--primary);}
-.cal-cell.sel{background:color-mix(in srgb,var(--primary) 13%,var(--card));}
-.cal-cell.full{background:color-mix(in srgb,var(--primary) 10%,var(--card));}
-.cal-cell.full .d{color:var(--primary); font-weight:700;}
+.cal-cell.blank{background:transparent; border-color:transparent; cursor:default;}
+.cal-cell.today{border-color:var(--brick); border-width:2px;}
+.cal-cell.sel{background:color-mix(in srgb,var(--brick) 12%,var(--card));}
+.cal-cell.full{background:color-mix(in srgb,var(--brick) 10%,var(--card));}
+.cal-cell.full .d{color:var(--brick); font-weight:700;}
 .cal-dots{display:flex; gap:2.5px; height:5px; max-width:90%; overflow:hidden;}
 .cal-dots i{width:5px; height:5px; border-radius:50%; flex:none;}
-.legend{display:flex; flex-wrap:wrap; gap:12px; padding:10px 4px; font-size:.72rem; color:var(--sub);}
+.legend{display:flex; flex-wrap:wrap; gap:12px; padding:10px 4px; font-size:.72rem; color:var(--muted);}
 .legend span{display:flex; align-items:center; gap:4px;}
 .legend i{width:7px; height:7px; border-radius:50%; display:inline-block;}
-.day-detail .row{display:flex; gap:8px; padding:7px 0; border-bottom:1px solid var(--line); font-size:.87rem; align-items:baseline;}
-.day-detail .row:last-child{border-bottom:none;}
+.day-detail .row{display:flex; gap:8px; padding:8px 0; border-top:1px dashed var(--dash); font-size:.87rem; align-items:baseline;}
+.day-detail .row:first-child{border-top:none;}
 .day-detail .st{flex:none; font-weight:600;}
-.day-detail .st.no{color:var(--sub); font-weight:400;}
-.day-detail .nm{flex:none; font-weight:500;}
-.day-detail .tx{color:var(--sub); font-size:.78rem; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.day-detail .st.no{color:var(--muted); font-weight:400;}
+.day-detail .nm{flex:none; font-weight:500; font-family:var(--serif);}
+.day-detail .tx{color:var(--muted); font-size:.78rem; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 /* ---------- settings ---------- */
 .set-row{display:flex; gap:8px; margin-top:12px;}
 .set-row input{flex:1;}
 .status-line{font-size:.84rem; margin-top:9px;}
-.status-line.err{color:#b56d5e;}
-.status-line.ok{color:var(--primary);}
+.status-line.err{color:var(--brick);}
+.status-line.ok{color:#5f8a4e;}
 details{margin-top:12px; font-size:.84rem;}
-details summary{cursor:pointer; color:var(--primary); font-weight:500;}
-details ol{padding-left:20px; margin-top:8px; color:var(--sub);}
+details summary{cursor:pointer; color:var(--brick); font-weight:500;}
+details ol{padding-left:20px; margin-top:8px; color:var(--muted);}
 details li{margin-bottom:4px;}
 details code, .code{background:var(--field); border-radius:6px; padding:1px 6px; font-size:.8em; word-break:break-all;}
 /* ---------- tabbar ---------- */
 .tabbar{
   position:fixed; left:0; right:0; bottom:0; z-index:30;
-  background:color-mix(in srgb, var(--card) 94%, transparent);
+  background:color-mix(in srgb,var(--card) 94%,transparent);
   backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-top:1px solid var(--line);
-  padding-bottom:env(safe-area-inset-bottom);
+  border-top:1px solid var(--line); padding-bottom:env(safe-area-inset-bottom);
 }
 .tabbar .inner{max-width:640px; margin:0 auto; display:flex;}
 .tabbar button{
-  flex:1; border:none; background:none; color:var(--sub); cursor:pointer;
-  padding:10px 0 13px; font-size:.86rem; letter-spacing:.08em;
-  display:flex; flex-direction:column; align-items:center; gap:3px;
+  flex:1; border:none; background:none; color:var(--muted); cursor:pointer;
+  padding:11px 0 13px; font-size:.86rem; letter-spacing:.1em; font-family:var(--serif);
+  display:flex; flex-direction:column; align-items:center; gap:4px;
 }
 .tabbar button::before{content:""; width:5px; height:5px; border-radius:50%; background:transparent;}
-.tabbar button.on{color:var(--text); font-weight:600;}
-.tabbar button.on::before{background:var(--primary);}
-@media (min-width:768px){
-  html{font-size:16.5px;}
-  .cal-grid{gap:7px;}
-}
+.tabbar button.on{color:var(--ink); font-weight:700;}
+.tabbar button.on::before{background:var(--brick);}
+@media (min-width:768px){ html{font-size:16.5px;} .cal-grid{gap:7px;} }
 </style>
 </head>
 <body>
 <header class="app-header">
   <div class="wrap">
-    <div class="app-title serif">每日打卡</div>
+    <div class="app-brand">每日打卡</div>
     <button class="sync-pill" id="syncPill" title="同步状态，点击进入设置"><span class="dot"></span><span id="syncText">本地模式</span></button>
   </div>
 </header>
@@ -253,24 +271,30 @@ const LS_DATA = "daka.data.v1";
 const LS_SET  = "daka.settings.v1";
 const BACKUP_URL = "https://cdn.jsdelivr.net/gh/zhangwan8754-maker/11111111@gh-pages/index.html";
 const WD = ["日","一","二","三","四","五","六"];
-const PALETTE = ["#c97f5f","#8a9a5b","#c8a24b","#7d9bb0","#a78a92","#7a9471","#b56d5e","#8f9a62"];
+const PALETTE = ["#bf3b26","#b0742e","#8a7a35","#4d7a86","#a2673f","#6f7a3c","#9c5a4e","#7a6a44"];
 
-/* 默认打卡项：健身（非必选）→ 单词 → 长难句 → 阅读，全部可在“设置”里编辑 */
+/* 默认打卡项（纸面日志模板）：健身（非必选）→ 单词 → 长难句 → 阅读，全部可在设置里编辑 */
 function defaultModConfig(){
   return { updatedAt:0, items:[
-    { id:"fitness", name:"健身", icon:"💪", color:"#c97f5f", required:false,
-      fields:[{ id:"note", label:"训练记录", ph:"今天练了什么？部位 / 时长 / 组数…" }] },
-    { id:"words", name:"单词", icon:"🔤", color:"#8a9a5b", required:true,
-      fields:[{ id:"note", label:"备注", ph:"今天背了哪些？（可不填）" }] },
-    { id:"longs", name:"长难句", icon:"🧩", color:"#c8a24b", required:true,
-      fields:[{ id:"note", label:"备注", ph:"分析了哪句？（可不填）" }] },
-    { id:"reading", name:"阅读", icon:"📖", color:"#7d9bb0", required:true,
-      fields:[
-        { id:"summary", label:"这篇讲了什么？", ph:"用一两句话概括…" },
-        { id:"stance",  label:"作者的立场是什么？", ph:"支持 / 反对 / 中立？理由是…" },
-        { id:"hard",    label:"标出的难句", ph:"抄下让你卡住的句子…" },
-        { id:"fav",     label:"喜欢的句子", ph:"值得摘抄的好句…" }
-      ] }
+    { id:"fitness", name:"健身", icon:"", color:"#bf3b26", required:false, fields:[
+      { id:"note", label:"训练内容", ph:"今天练了什么？部位 / 组数 / 时长…" },
+      { id:"feel", label:"今日感受", ph:"状态如何？（可不填）" }
+    ]},
+    { id:"words", name:"单词", icon:"", color:"#b0742e", required:true, fields:[
+      { id:"note", label:"今天的单词", ph:"列出今天背 / 复习的词…" }
+    ]},
+    { id:"longs", name:"长难句", icon:"", color:"#8a7a35", required:true, fields:[
+      { id:"note",  label:"原句",     ph:"抄下今天的长难句…" },
+      { id:"parse", label:"结构拆解", ph:"主干 / 从句 / 修饰…（可不填）" },
+      { id:"trans", label:"翻译",     ph:"自己的译文…（可不填）" }
+    ]},
+    { id:"reading", name:"阅读", icon:"", color:"#4d7a86", required:true, fields:[
+      { id:"title",   label:"文章",        ph:"标题 / 出处…" },
+      { id:"summary", label:"这篇讲了什么", ph:"用一两句话概括…" },
+      { id:"stance",  label:"作者立场",    ph:"支持 / 反对 / 中立？理由…" },
+      { id:"hard",    label:"难句",        ph:"标出让你卡住的句子…", style:"quote" },
+      { id:"fav",     label:"喜欢的句子",  ph:"值得摘抄的好句…", style:"quote" }
+    ]}
   ]};
 }
 
@@ -281,7 +305,6 @@ let currentTab = "today";
 let selectedDate = todayStr();
 let calY, calM;
 let selectedCalDate = todayStr();
-let openPanels = new Set();
 let sync = { inFlight:false, pending:false, attempts:0, lastOk:0, lastErr:"", timer:null, state:"off" };
 
 /* ================= 工具函数 ================= */
@@ -297,28 +320,22 @@ function fmtTime(ts){ return new Date(ts).toLocaleTimeString("zh-CN",{hour:"2-di
 function sortKeysDeep(x){
   if(Array.isArray(x)) return x.map(sortKeysDeep);
   if(x && typeof x === "object"){
-    const o = {};
-    Object.keys(x).sort().forEach(k => o[k] = sortKeysDeep(x[k]));
-    return o;
+    const o = {}; Object.keys(x).sort().forEach(k => o[k] = sortKeysDeep(x[k])); return o;
   }
   return x;
 }
 function stableStringify(obj){ return JSON.stringify(sortKeysDeep(obj), null, 1); }
-
 function b64encode(str){
-  const bytes = new TextEncoder().encode(str);
-  let bin = "";
+  const bytes = new TextEncoder().encode(str); let bin = "";
   for(let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
   return btoa(bin);
 }
 function b64decode(b64){
   const bin = atob(String(b64).replace(/\s/g,""));
-  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
+  return new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
 }
 
-/* ================= 数据模型 =================
-   day = { updatedAt, mods:{ [模块id]: {done, doneAt, notes:{ [字段id]: 文本 }} }, todos:[] } */
+/* ================= 数据模型 ================= */
 function normalizeDay(d){
   const e = { updatedAt:0, mods:{}, todos:[] };
   if(!d || typeof d !== "object") return e;
@@ -330,7 +347,6 @@ function normalizeDay(d){
       e.mods[k] = { done:!!m.done, doneAt:m.doneAt||0, notes:(m.notes && typeof m.notes === "object") ? m.notes : {} };
     });
   }else if(d.english || d.fitness){
-    // 旧版(v1)数据迁移
     const r = (d.english && d.english.reading) || {};
     const w = (d.english && d.english.words) || {};
     const l = (d.english && d.english.longs) || {};
@@ -342,22 +358,24 @@ function normalizeDay(d){
   }
   return e;
 }
-/* 旧版亮色 → 大地色系（仅迁移旧默认色，用户自定义的颜色不受影响） */
+/* 旧亮色 / 大地色 → 纸面日志暖色（仅迁移旧默认色，用户自选色不变） */
 const COLOR_MIGRATE = {
-  "#f59e0b":"#c97f5f", "#8b5cf6":"#8a9a5b", "#0d9d97":"#c8a24b", "#3b82f6":"#7d9bb0",
-  "#ef4444":"#b56d5e", "#10b981":"#7a9471", "#ec4899":"#a78a92", "#6366f1":"#8f9a62"
+  "#f59e0b":"#bf3b26", "#8b5cf6":"#b0742e", "#0d9d97":"#8a7a35", "#3b82f6":"#4d7a86",
+  "#c97f5f":"#bf3b26", "#8a9a5b":"#b0742e", "#c8a24b":"#8a7a35", "#7d9bb0":"#4d7a86",
+  "#7a9471":"#6f7a3c", "#b56d5e":"#9c5a4e", "#a78a92":"#7a6a44"
 };
 function normalizeConfig(c){
   const def = defaultModConfig();
-  // 从未自定义过（updatedAt=0）→ 直接采用最新默认配置
+  // 从未自定义过（updatedAt=0）→ 直接采用最新默认模板
   if(!c || typeof c !== "object" || !(c.updatedAt > 0) || !Array.isArray(c.items) || !c.items.length) return def;
   const items = c.items.filter(m => m && m.id && m.name).map((m,i)=>{
     const color = String(m.color || PALETTE[i % PALETTE.length]);
     return {
-      id:String(m.id), name:String(m.name), icon:String(m.icon||"⭐"),
+      id:String(m.id), name:String(m.name), icon:String(m.icon||""),
       color:COLOR_MIGRATE[color] || color, required:!!m.required,
       fields:(Array.isArray(m.fields) ? m.fields : []).filter(f => f && f.id).map(f=>({
-        id:String(f.id), label:String(f.label||"备注"), ph:String(f.ph||"")
+        id:String(f.id), label:String(f.label||"备注"), ph:String(f.ph||""),
+        style:(f.style === "quote" ? "quote" : "text")
       }))
     };
   });
@@ -398,13 +416,14 @@ function getDay(ds, create){
 function modState(day, id){ return day.mods[id] || { done:false, doneAt:0, notes:{} }; }
 function modStateW(day, id){ return day.mods[id] || (day.mods[id] = { done:false, doneAt:0, notes:{} }); }
 function isDone(dayRaw, id){ return !!(dayRaw && dayRaw.mods && dayRaw.mods[id] && dayRaw.mods[id].done); }
-
+function dayFull(dayRaw){
+  const req = cfgItems().filter(m => m.required);
+  return req.length > 0 && req.every(m => isDone(dayRaw, m.id));
+}
 function materializeTemplates(ds, day){
-  if(ds < todayStr()) return; // 不给过去的日子自动生成固定任务
+  if(ds < todayStr()) return;
   (db.dailyTemplates.items || []).forEach(t=>{
-    if(!day.todos.some(x => x.tplId === t.id)){
-      day.todos.push({ id:uid(), tplId:t.id, text:t.text, done:false });
-    }
+    if(!day.todos.some(x => x.tplId === t.id)) day.todos.push({ id:uid(), tplId:t.id, text:t.text, done:false });
   });
 }
 
@@ -415,26 +434,15 @@ function loadLocal(){
   catch(e){ db = normalizeDb(null); }
 }
 function saveSettings(){ try{ localStorage.setItem(LS_SET, JSON.stringify(settings)); }catch(e){} }
-function loadSettings(){
-  try{ Object.assign(settings, JSON.parse(localStorage.getItem(LS_SET) || "{}")); }catch(e){}
-}
-function touch(day){
-  day.updatedAt = Date.now();
-  saveLocal();
-  scheduleSync();
-}
-function touchConfig(){
-  db.modConfig.updatedAt = Date.now();
-  saveLocal();
-  scheduleSync();
-}
+function loadSettings(){ try{ Object.assign(settings, JSON.parse(localStorage.getItem(LS_SET) || "{}")); }catch(e){} }
+function touch(day){ day.updatedAt = Date.now(); saveLocal(); scheduleSync(); }
+function touchConfig(){ db.modConfig.updatedAt = Date.now(); saveLocal(); scheduleSync(); }
 
 /* ================= GitHub 同步 ================= */
 async function gh(path, opts){
   opts = opts || {};
   const res = await fetch("https://api.github.com" + path, {
-    method: opts.method || "GET",
-    cache: "no-store",
+    method: opts.method || "GET", cache: "no-store",
     headers: {
       "Authorization": "Bearer " + settings.token,
       "Accept": "application/vnd.github+json",
@@ -453,61 +461,41 @@ async function gh(path, opts){
 async function ensureBranch(){
   if(settings.branch) return settings.branch;
   const r = await gh(`/repos/${OWNER}/${REPO}`);
-  settings.branch = r.default_branch;
-  saveSettings();
-  return settings.branch;
+  settings.branch = r.default_branch; saveSettings(); return settings.branch;
 }
 function scheduleSync(delay){
   if(!settings.token) return;
-  clearTimeout(sync.timer);
-  sync.timer = setTimeout(doSync, delay || 2500);
+  clearTimeout(sync.timer); sync.timer = setTimeout(doSync, delay || 2500);
 }
 async function doSync(){
   if(!settings.token){ setSyncState("off"); return; }
   if(sync.inFlight){ sync.pending = true; return; }
-  sync.inFlight = true;
-  setSyncState("busy");
+  sync.inFlight = true; setSyncState("busy");
   let err = null;
   try{
     const branch = await ensureBranch();
     let remote = null, sha = null, remoteStr = null;
     try{
       const f = await gh(`/repos/${OWNER}/${REPO}/contents/${DATA_PATH}?ref=${branch}&t=${Date.now()}`);
-      sha = f.sha;
-      remote = normalizeDb(JSON.parse(b64decode(f.content)));
-      remoteStr = stableStringify(remote);
-    }catch(e){
-      if(e.status !== 404) throw e; // 404 = 数据文件还不存在，首次同步会创建
-    }
+      sha = f.sha; remote = normalizeDb(JSON.parse(b64decode(f.content))); remoteStr = stableStringify(remote);
+    }catch(e){ if(e.status !== 404) throw e; }
     const merged = remote ? mergeDb(remote, normalizeDb(db)) : normalizeDb(db);
     const mergedStr = stableStringify(merged);
-    db = merged;
-    saveLocal();
+    db = merged; saveLocal();
     if(mergedStr !== remoteStr){
       await gh(`/repos/${OWNER}/${REPO}/contents/${DATA_PATH}`, {
         method:"PUT",
-        body:{
-          message:"打卡数据同步 " + new Date().toLocaleString("zh-CN", {hour12:false}),
-          content: b64encode(mergedStr),
-          branch: branch,
-          ...(sha ? {sha} : {})
-        }
+        body:{ message:"打卡数据同步 " + new Date().toLocaleString("zh-CN", {hour12:false}),
+          content: b64encode(mergedStr), branch, ...(sha ? {sha} : {}) }
       });
     }
   }catch(e){ err = e; }
   sync.inFlight = false;
-  if(!err){
-    sync.attempts = 0;
-    sync.lastOk = Date.now();
-    setSyncState("ok");
-    renderView();
-  }else if((err.status === 409 || err.status === 422) && sync.attempts < 3){
-    sync.attempts++;                      // 两台设备同时写入，稍后重试
-    setTimeout(doSync, 900 * sync.attempts);
-    return;
+  if(!err){ sync.attempts = 0; sync.lastOk = Date.now(); setSyncState("ok"); renderView(); }
+  else if((err.status === 409 || err.status === 422) && sync.attempts < 3){
+    sync.attempts++; setTimeout(doSync, 900 * sync.attempts); return;
   }else{
-    sync.attempts = 0;
-    sync.lastErr = err.message || "未知错误";
+    sync.attempts = 0; sync.lastErr = err.message || "未知错误";
     if(err.status === 401) sync.lastErr = "Token 无效或已过期";
     setSyncState("err");
   }
@@ -515,14 +503,36 @@ async function doSync(){
 }
 function setSyncState(s){
   sync.state = s;
-  const pill = document.getElementById("syncPill");
-  const txt  = document.getElementById("syncText");
+  const pill = document.getElementById("syncPill"), txt = document.getElementById("syncText");
   pill.className = "sync-pill " + (s === "off" ? "" : s);
   if(s === "off") txt.textContent = "本地模式";
   else if(s === "busy") txt.textContent = "同步中…";
   else if(s === "ok") txt.textContent = "已同步 " + fmtTime(sync.lastOk);
   else txt.textContent = "同步失败";
   if(currentTab === "settings") renderSyncStatusLine();
+}
+
+/* ================= 连续天数 ================= */
+function streak(id){
+  let d = new Date(), n = 0;
+  if(!isDone(db.days[fmtDate(d)], id)) d.setDate(d.getDate()-1);
+  while(isDone(db.days[fmtDate(d)], id)){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+function fullStreak(){
+  let d = new Date(), n = 0;
+  if(!dayFull(db.days[fmtDate(d)])) d.setDate(d.getDate()-1);
+  while(dayFull(db.days[fmtDate(d)])){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+function countMonth(id, y, m){
+  const prefix = y + "-" + pad(m+1);
+  return Object.keys(db.days).filter(k => k.startsWith(prefix) && isDone(db.days[k], id)).length;
+}
+function last7Dates(){
+  const a = [];
+  for(let i = 6; i >= 0; i--){ const d = new Date(); d.setDate(d.getDate()-i); a.push(fmtDate(d)); }
+  return a;
 }
 
 /* ================= 视图：今日 ================= */
@@ -534,25 +544,39 @@ function renderToday(){
   const isToday = ds === todayStr();
   const items = cfgItems();
   const req = items.filter(m => m.required);
-  const opt = items.filter(m => !m.required);
   const doneReq = req.filter(m => isDone(day, m.id)).length;
-  const doneOpt = opt.filter(m => isDone(day, m.id)).length;
+  const doneAll = items.filter(m => isDone(day, m.id)).length;
   const todoDone = day.todos.filter(t => t.done).length;
+  const fs = fullStreak();
+  const week = last7Dates();
+  const tds = todayStr();
 
-  let meta = req.length ? `必选 ${doneReq}/${req.length}` : "";
-  if(opt.length) meta += (meta ? " · " : "") + `选做 ${doneOpt}/${opt.length}`;
+  let meta = `必选 ${doneReq}/${req.length || 0}`;
+  const optN = items.length - req.length;
+  if(optN) meta += ` · 选做 ${items.filter(m=>!m.required && isDone(day,m.id)).length}/${optN}`;
   if(day.todos.length) meta += ` · 待办 ${todoDone}/${day.todos.length}`;
-  if(req.length && doneReq === req.length) meta += ` · <b>🌿 必选全部完成</b>`;
 
   let html = `
-  <div class="today-head">
-    <div class="today-date serif">${d.getMonth()+1}月${d.getDate()}日<small>星期${WD[d.getDay()]}</small></div>
-    <div class="today-meta">${meta}</div>
-    <div class="progress-bar"><i style="width:${req.length ? doneReq/req.length*100 : 0}%"></i></div>
+  <div class="paper-head">
+    <div class="ph-top">
+      <div>
+        <div class="ph-title">每日打卡</div>
+        <div class="ph-date">${d.getMonth()+1}月${d.getDate()}日 · 周${WD[d.getDay()]}</div>
+      </div>
+      <div class="stamp ${fs<1?"zero":""}">${fs>=1 ? `连续 ${fs} 天` : `<small>坚持</small>开始记录`}</div>
+    </div>
+    <div class="week-strip">
+      ${week.map(wd=>{ const dd=parseDate(wd); return `<div class="wd ${dayFull(db.days[wd])?"on":""} ${wd===tds?"today":""}"><div class="n">${dd.getDate()}</div><div class="o"></div></div>`; }).join("")}
+    </div>
+    <div class="ph-prog">
+      <div class="lab today-meta"><b>${doneAll}</b>/${items.length} · ${meta}</div>
+      <div class="bar"><i style="width:${items.length ? doneAll/items.length*100 : 0}%"></i></div>
+    </div>
+    ${req.length && doneReq === req.length ? `<div class="ph-full">✦ 今日必选全部完成，继续保持 ✦</div>` : ""}
     ${!isToday ? `<div class="banner"><span>正在补卡：${dateCN(ds)}</span><button data-action="back-today">回到今天</button></div>` : ""}
   </div>
 
-  <div class="section-title">打 卡</div>`;
+  <div class="divider"><span class="t">今日记录</span><span class="line"></span><span class="h">点击文字即可编辑</span></div>`;
 
   items.forEach(m => { html += modCard(day, m); });
 
@@ -581,81 +605,56 @@ function modCard(day, m){
   const stk = streak(m.id);
   const chip = m.required ? `<span class="chip req">必选</span>` : `<span class="chip opt">选做</span>`;
   let sub = "";
-  if(st.done) sub = `<span class="done-t">已完成${st.doneAt ? " " + fmtTime(st.doneAt) : ""}</span>${stk > 1 ? ` · 连续 ${stk} 天` : ""}`;
-  else if(stk > 0) sub = `已连续 ${stk} 天`;
+  if(st.done) sub = `<span class="done-t">✓ 已完成${st.doneAt ? " · " + fmtTime(st.doneAt) : ""}</span>${stk > 1 ? ` · 连续 ${stk} 天` : ""}`;
+  else if(stk > 0) sub = `已连续 ${stk} 天，别断了`;
+  else sub = "点击右侧圆圈打卡";
   return `
   <div class="card" style="--mc:${m.color}">
-    <div class="card-head">
-      <div class="mod-icon">${esc(m.icon)}</div>
+    <div class="jc-head">
       <div class="card-info">
-        <div class="card-title">${esc(m.name)}${chip}</div>
-        ${sub ? `<div class="card-sub">${sub}</div>` : ""}
+        <div class="card-title">${m.icon ? `<span class="ico">${esc(m.icon)}</span>` : ""}${esc(m.name)}${chip}</div>
+        <div class="card-sub">${sub}</div>
       </div>
       <button class="check ${st.done?"done":""}" data-action="toggle-mod" data-mod="${m.id}" aria-label="${esc(m.name)}打卡">
         <svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>
       </button>
     </div>
-    ${modFields(day, m)}
+    ${m.fields.length ? `<div class="jc-body">` + m.fields.map(f=>`
+      <div class="jrow">
+        <div class="jlabel">${esc(f.label)}</div>
+        <textarea class="jinput ${f.style==="quote"?"quote":""}" rows="1" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea>
+      </div>`).join("") + `</div>` : ""}
   </div>`;
 }
-function modFields(day, m){
-  if(!m.fields.length) return "";
-  const st = modState(day, m.id);
-  if(m.fields.length === 1){
-    const f = m.fields[0];
-    return `<div class="note-area"><textarea rows="2" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea></div>`;
-  }
-  const hasContent = m.fields.some(f => st.notes[f.id]);
-  const open = openPanels.has(m.id) || hasContent;
-  if(!open) return `<button class="link-btn" data-action="open-panel" data-panel="${m.id}">写笔记 ▾</button>`;
-  return `<div class="note-area">` + m.fields.map(f=>`
-    <div class="field-label">${esc(f.label)}</div>
-    <textarea rows="2" data-field="${m.id}:${f.id}" placeholder="${esc(f.ph || f.label)}">${esc(st.notes[f.id] || "")}</textarea>`).join("") + `</div>`;
-}
 
-/* ================= 视图：记录（近7天+日历） ================= */
-function streak(id){
-  let d = new Date(), n = 0;
-  if(!isDone(db.days[fmtDate(d)], id)) d.setDate(d.getDate()-1); // 今天还没打不断签
-  while(isDone(db.days[fmtDate(d)], id)){ n++; d.setDate(d.getDate()-1); }
-  return n;
-}
-function countMonth(id, y, m){
-  const prefix = y + "-" + pad(m+1);
-  return Object.keys(db.days).filter(k => k.startsWith(prefix) && isDone(db.days[k], id)).length;
-}
-function dayFull(dayRaw){
-  const req = cfgItems().filter(m => m.required);
-  return req.length > 0 && req.every(m => isDone(dayRaw, m.id));
-}
+/* ================= 视图：记录 ================= */
 function renderRecord(){
   const now = new Date();
   const items = cfgItems();
   const tds = todayStr();
-  const last7 = [];
-  for(let i = 6; i >= 0; i--){ const d = new Date(); d.setDate(d.getDate()-i); last7.push(fmtDate(d)); }
+  const week = last7Dates();
 
   let html = `
-  <div class="section-title" style="margin-top:12px">近 7 天</div>
+  <div class="section-title">近 7 天</div>
   <div class="card">
-    <div class="week-row head">
+    <div class="week-card-row head">
       <div class="w-name"></div>
-      <div class="w-dots">${last7.map(ds=>`<span class="wd">${WD[parseDate(ds).getDay()]}</span>`).join("")}</div>
+      <div class="w-dots">${week.map(wd=>`<span class="w-hd">${WD[parseDate(wd).getDay()]}</span>`).join("")}</div>
       <div class="w-streak">连续</div>
     </div>
     ${items.map(m=>{
       const stk = streak(m.id);
       return `
-    <div class="week-row" style="--mc:${m.color}">
+    <div class="week-card-row" style="--mc:${m.color}">
       <div class="w-name"><i style="background:${m.color}"></i>${esc(m.name)}<small>本月 ${countMonth(m.id, now.getFullYear(), now.getMonth())} 次</small></div>
-      <div class="w-dots">${last7.map(ds=>`<span class="${isDone(db.days[ds], m.id)?"on":""}${ds===tds?" td":""}"></span>`).join("")}</div>
+      <div class="w-dots">${week.map(wd=>`<span class="${isDone(db.days[wd], m.id)?"on":""}${wd===tds?" td":""}"></span>`).join("")}</div>
       <div class="w-streak${stk>0?" hot":""}">${stk} 天</div>
     </div>`;}).join("")}
   </div>`;
 
   const first = new Date(calY, calM, 1);
   const daysInMonth = new Date(calY, calM+1, 0).getDate();
-  const offset = (first.getDay()+6) % 7; // 周一开头
+  const offset = (first.getDay()+6) % 7;
   html += `
   <div class="section-title">打卡日历</div>
   <div class="cal-nav">
@@ -669,7 +668,7 @@ function renderRecord(){
   for(let i = 1; i <= daysInMonth; i++){
     const ds = calY + "-" + pad(calM+1) + "-" + pad(i);
     const dayRaw = db.days[ds];
-    const dots = cfgItems().filter(m => isDone(dayRaw, m.id));
+    const dots = items.filter(m => isDone(dayRaw, m.id));
     const cls = ["cal-cell"];
     if(ds === tds) cls.push("today");
     if(ds === selectedCalDate) cls.push("sel");
@@ -682,7 +681,7 @@ function renderRecord(){
   }
   html += `</div>
   <div class="legend">
-    ${cfgItems().map(m=>`<span><i style="background:${m.color}"></i>${esc(m.name)}</span>`).join("")}
+    ${items.map(m=>`<span><i style="background:${m.color}"></i>${esc(m.name)}</span>`).join("")}
     <span>· 必选全完成的日子会填色</span>
   </div>`;
 
@@ -701,17 +700,17 @@ function renderDayDetail(ds){
     const st = modState(day, m.id);
     const preview = m.fields.map(f => st.notes[f.id]).filter(Boolean).join(" / ");
     html += `<div class="row">
-      <span class="st ${st.done?"":"no"}">${st.done ? "✅" : "◻️"}</span>
+      <span class="st ${st.done?"":"no"}">${st.done ? "✓" : "○"}</span>
       <span class="nm">${esc(m.name)}</span>
       <span class="tx">${esc(preview)}</span>
     </div>`;
   });
   if(day.todos.length){
     day.todos.forEach(t=>{
-      html += `<div class="row"><span class="st ${t.done?"":"no"}">${t.done ? "☑️" : "◻️"}</span><span class="nm" style="font-weight:400">${esc(t.text)}</span></div>`;
+      html += `<div class="row"><span class="st ${t.done?"":"no"}">${t.done ? "✓" : "○"}</span><span class="nm" style="font-weight:400">${esc(t.text)}</span></div>`;
     });
   }
-  html += `<button class="link-btn" data-action="edit-day" data-date="${ds}">${ds === todayStr() ? "去打卡 / 编辑 →" : "补卡 / 编辑这一天 →"}</button>
+  html += `<button class="btn ghost" style="margin-top:12px" data-action="edit-day" data-date="${ds}">${ds === todayStr() ? "去打卡 / 编辑" : "补卡 / 编辑这一天"}</button>
   </div>`;
   return html;
 }
@@ -724,9 +723,9 @@ function renderSettings(){
   <div style="height:2px"></div>
   <div class="section-title">多设备同步</div>
   <div class="card">
-    <div style="font-size:.85rem; color:var(--sub)">
+    <div style="font-size:.85rem; color:var(--muted)">
       配置一次 GitHub Token，手机和电脑的数据就会通过你自己的仓库
-      <b style="color:var(--text)">${OWNER}/${REPO}</b> 自动互通。数据只存在你的仓库里，Token 只保存在本设备浏览器中。
+      <b style="color:var(--ink)">${OWNER}/${REPO}</b> 自动互通。数据只存在你的仓库里，Token 只保存在本设备浏览器中。
     </div>
     <div class="warn-box">注意：Token 要在你的<b>个人账号设置</b>里创建。如果你看到的是 Deploy keys，说明进了<b>仓库</b>的 Settings，走错地方了——点下面的按钮直达正确页面。</div>
     <a class="btn" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">直达 Token 创建页面</a>
@@ -743,23 +742,22 @@ function renderSettings(){
       <summary>详细步骤（只需一次，约 2 分钟）</summary>
       <ol>
         <li>点上面的「直达 Token 创建页面」按钮（手动路径：GitHub 任意页面 → 点<b>右上角自己的头像</b> → Settings → 左侧栏拉到<b>最底部</b> → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token）</li>
-        <li>Token name 随便填（比如 <code>daka</code>）；Expiration 有效期建议选最长</li>
-        <li>Repository access 选 <b>Only select repositories</b>，在下拉里勾选 <code>${REPO}</code></li>
-        <li>往下找 Permissions → <b>Repository permissions</b> → 找到 <b>Contents</b> 一项 → 右侧选 <b>Read and write</b></li>
-        <li>拉到页面底部点 <b>Generate token</b>，复制 <code>github_pat_</code> 开头的一长串</li>
-        <li>粘贴到上面输入框，点「保存并同步」</li>
-        <li>在另一台设备打开本页面，粘贴<b>同一个</b> Token，数据即互通 ✅</li>
+        <li>Token name 随便填；Expiration 有效期建议选最长</li>
+        <li>Repository access 选 <b>Only select repositories</b>，勾选 <code>${REPO}</code></li>
+        <li>Permissions → <b>Repository permissions</b> → <b>Contents</b> → 选 <b>Read and write</b></li>
+        <li>底部点 <b>Generate token</b>，复制 <code>github_pat_</code> 开头的一串</li>
+        <li>粘贴到上面输入框，点「保存并同步」；另一台设备粘贴<b>同一个</b> Token 即互通 ✅</li>
       </ol>
     </details>
   </div>
 
   <div class="section-title">打卡项管理</div>
   <div class="card">
-    <div style="font-size:.85rem; color:var(--sub)">每个打卡项都可以：改名、换图标（填个表情符号）、勾选是否<b>每日必选</b>、用 ↑↓ 调顺序、✕ 删除。「记录问题」是打卡时要填的笔记栏，同样可以增删改。</div>
+    <div style="font-size:.85rem; color:var(--muted)">每个打卡项都可改名、换图标（填表情符号，留空则纯文字）、勾选<b>每日必选</b>、用 ↑↓ 调顺序、✕ 删除。「记录问题」是打卡时要填的行；<b>引</b> 按钮可把某行设为引用体（衬线斜体，适合英文句子）。</div>
     ${items.map((m,i)=>`
     <div class="mod-edit" style="--mc:${m.color}">
       <div class="me-row">
-        <input type="text" class="me-icon" data-medit="icon" data-id="${m.id}" value="${esc(m.icon)}" maxlength="4" aria-label="图标">
+        <input type="text" class="me-icon" data-medit="icon" data-id="${m.id}" value="${esc(m.icon)}" maxlength="4" placeholder="🏷" aria-label="图标">
         <input type="text" class="me-name" data-medit="name" data-id="${m.id}" value="${esc(m.name)}" aria-label="名称">
         <label class="me-req"><input type="checkbox" data-medit="required" data-id="${m.id}" ${m.required?"checked":""}>必选</label>
         <button class="me-btn" data-action="mod-up" data-id="${m.id}" ${i===0?"disabled":""}>↑</button>
@@ -771,9 +769,10 @@ function renderSettings(){
         ${m.fields.map(f=>`
         <div class="me-field">
           <input type="text" data-fedit="${m.id}:${f.id}" value="${esc(f.label)}">
+          <button class="me-btn ${f.style==="quote"?"on":""}" data-action="field-style" data-mod="${m.id}" data-fid="${f.id}" title="切换引用体">引</button>
           <button class="me-btn" data-action="field-del" data-mod="${m.id}" data-fid="${f.id}">✕</button>
         </div>`).join("")}
-        <button class="link-btn" data-action="field-add" data-id="${m.id}">＋ 添加记录问题</button>
+        <button class="btn ghost" style="margin-top:8px;font-size:.8rem;padding:6px 12px" data-action="field-add" data-id="${m.id}">＋ 添加记录问题</button>
       </div>
     </div>`).join("")}
     <div class="todo-add">
@@ -784,7 +783,7 @@ function renderSettings(){
 
   <div class="section-title">每日固定任务</div>
   <div class="card">
-    <div style="font-size:.85rem; color:var(--sub)">这里添加的任务会每天自动出现在「待办」里。</div>
+    <div style="font-size:.85rem; color:var(--muted)">这里添加的任务会每天自动出现在「待办」里。</div>
     ${tpls.length ? tpls.map(t=>`
       <div class="todo-row">
         <span class="todo-tag">每日</span>
@@ -808,12 +807,10 @@ function renderSettings(){
   </div>
 
   <div class="section-title">说明</div>
-  <div class="card" style="font-size:.82rem; color:var(--sub)">
-    · 主网址打不开时（国内网络对 github.io 时常拦截），用备用网址：<br>
-    　<a href="${BACKUP_URL}" style="color:var(--primary); word-break:break-all">${BACKUP_URL}</a><br>
-    　两个网址内容相同；本地数据分开存，但配置同一个 Token 就会通过云端互通<br>
-    · 本页加载成功一次后即支持<b style="color:var(--text)">离线使用</b>，断网也能打开和记录<br>
-    · 数据实时保存在本机浏览器，配置同步后另存一份在仓库文件 <span class="code">${DATA_PATH}</span><br>
+  <div class="card" style="font-size:.82rem; color:var(--muted)">
+    · 主网址打不开时（国内网络常拦截 github.io），用备用网址：<br>
+    　<a href="${BACKUP_URL}" style="color:var(--brick); word-break:break-all">${BACKUP_URL}</a><br>
+    · 本页加载成功一次后支持<b style="color:var(--ink)">离线使用</b>，断网也能打开和记录<br>
     · 手机浏览器打开本页 → 菜单里选「添加到主屏幕」，即可像 App 一样使用<br>
     · 点击历史日期可以补卡；进度条和日历填色只统计「必选」项
   </div>`;
@@ -829,12 +826,14 @@ function renderSyncStatusLine(){
 }
 
 /* ================= 渲染入口 ================= */
+function autoGrow(el){ el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
 function renderView(){
   const view = document.getElementById("view");
   if(currentTab === "today") view.innerHTML = renderToday();
   else if(currentTab === "record") view.innerHTML = renderRecord();
   else view.innerHTML = renderSettings();
   if(currentTab === "settings") renderSyncStatusLine();
+  view.querySelectorAll("textarea.jinput").forEach(autoGrow);
   document.querySelectorAll(".tabbar button").forEach(b => b.classList.toggle("on", b.dataset.tab === currentTab));
 }
 
@@ -842,16 +841,9 @@ function renderView(){
 document.querySelector(".tabbar").addEventListener("click", e=>{
   const b = e.target.closest("button[data-tab]");
   if(!b) return;
-  currentTab = b.dataset.tab;
-  renderView();
-  window.scrollTo(0,0);
+  currentTab = b.dataset.tab; renderView(); window.scrollTo(0,0);
 });
-
-document.getElementById("syncPill").addEventListener("click", ()=>{
-  currentTab = "settings";
-  renderView();
-  window.scrollTo(0,0);
-});
+document.getElementById("syncPill").addEventListener("click", ()=>{ currentTab = "settings"; renderView(); window.scrollTo(0,0); });
 
 const view = document.getElementById("view");
 
@@ -863,13 +855,10 @@ view.addEventListener("click", e=>{
   if(act === "toggle-mod"){
     const day = getDay(selectedDate, true);
     const st = modStateW(day, el.dataset.mod);
-    st.done = !st.done;
-    st.doneAt = st.done ? Date.now() : 0;
-    touch(day);
-    renderView();
+    st.done = !st.done; st.doneAt = st.done ? Date.now() : 0;
+    touch(day); renderView();
   }
-  else if(act === "open-panel"){ openPanels.add(el.dataset.panel); renderView(); }
-  else if(act === "back-today"){ selectedDate = todayStr(); openPanels.clear(); renderView(); }
+  else if(act === "back-today"){ selectedDate = todayStr(); renderView(); }
   else if(act === "todo-add"){ addTodo(); }
   else if(act === "todo-toggle"){
     const day = getDay(selectedDate, true);
@@ -879,74 +868,58 @@ view.addEventListener("click", e=>{
   else if(act === "todo-del"){
     const day = getDay(selectedDate, true);
     day.todos = day.todos.filter(x => x.id !== el.dataset.id);
-    touch(day);
-    renderView();
+    touch(day); renderView();
   }
   else if(act === "cal-prev"){ calM--; if(calM < 0){ calM = 11; calY--; } renderView(); }
   else if(act === "cal-next"){ calM++; if(calM > 11){ calM = 0; calY++; } renderView(); }
   else if(act === "cal-day"){ selectedCalDate = el.dataset.date; renderView(); }
-  else if(act === "edit-day"){
-    selectedDate = el.dataset.date;
-    openPanels.clear();
-    currentTab = "today";
-    renderView();
-    window.scrollTo(0,0);
-  }
-  /* ----- 打卡项管理 ----- */
+  else if(act === "edit-day"){ selectedDate = el.dataset.date; currentTab = "today"; renderView(); window.scrollTo(0,0); }
   else if(act === "mod-up" || act === "mod-down"){
     const items = cfgItems();
     const i = items.findIndex(m => m.id === el.dataset.id);
     const j = act === "mod-up" ? i-1 : i+1;
     if(i < 0 || j < 0 || j >= items.length) return;
     [items[i], items[j]] = [items[j], items[i]];
-    touchConfig();
-    renderView();
+    touchConfig(); renderView();
   }
   else if(act === "mod-del"){
     const m = findMod(el.dataset.id);
     if(!m) return;
     if(!confirm(`删除打卡项「${m.name}」？\n历史打卡数据会保留在文件里，但不再显示。`)) return;
     db.modConfig.items = cfgItems().filter(x => x.id !== m.id);
-    touchConfig();
-    renderView();
+    touchConfig(); renderView();
   }
   else if(act === "mod-add"){
     const inp = document.getElementById("newModInput");
     const name = inp.value.trim();
     if(!name) return;
-    cfgItems().push({
-      id:uid(), name, icon:"⭐",
-      color:PALETTE[cfgItems().length % PALETTE.length],
-      required:false,
-      fields:[{ id:uid(), label:"备注", ph:"" }]
-    });
-    touchConfig();
-    renderView();
+    cfgItems().push({ id:uid(), name, icon:"", color:PALETTE[cfgItems().length % PALETTE.length], required:false, fields:[{ id:uid(), label:"备注", ph:"", style:"text" }] });
+    touchConfig(); renderView();
   }
   else if(act === "field-add"){
     const m = findMod(el.dataset.id);
     if(!m) return;
-    m.fields.push({ id:uid(), label:"新问题（点这里改名）", ph:"" });
-    touchConfig();
-    renderView();
+    m.fields.push({ id:uid(), label:"新问题（点这里改名）", ph:"", style:"text" });
+    touchConfig(); renderView();
   }
   else if(act === "field-del"){
     const m = findMod(el.dataset.mod);
     if(!m) return;
     m.fields = m.fields.filter(f => f.id !== el.dataset.fid);
-    touchConfig();
-    renderView();
+    touchConfig(); renderView();
+  }
+  else if(act === "field-style"){
+    const m = findMod(el.dataset.mod);
+    const f = m && m.fields.find(x => x.id === el.dataset.fid);
+    if(f){ f.style = f.style === "quote" ? "text" : "quote"; touchConfig(); renderView(); }
   }
   else if(act === "tpl-add"){ addTemplate(); }
   else if(act === "tpl-del"){
     db.dailyTemplates.items = db.dailyTemplates.items.filter(t => t.id !== el.dataset.id);
     db.dailyTemplates.updatedAt = Date.now();
-    // 顺手把今天还没完成的这条固定任务从待办里拿掉
     const day = db.days[todayStr()];
     if(day){ day.todos = day.todos.filter(t => !(t.tplId === el.dataset.id && !t.done)); day.updatedAt = Date.now(); }
-    saveLocal();
-    scheduleSync();
-    renderView();
+    saveLocal(); scheduleSync(); renderView();
   }
   else if(act === "toggle-token-vis"){
     const inp = document.getElementById("tokenInput");
@@ -964,9 +937,7 @@ view.addEventListener("click", e=>{
   else if(act === "export-data"){
     const blob = new Blob([stableStringify(normalizeDb(db))], {type:"application/json"});
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "打卡备份-" + todayStr() + ".json";
-    a.click();
+    a.href = URL.createObjectURL(blob); a.download = "打卡备份-" + todayStr() + ".json"; a.click();
     URL.revokeObjectURL(a.href);
   }
   else if(act === "import-pick"){ document.getElementById("importFile").click(); }
@@ -974,18 +945,19 @@ view.addEventListener("click", e=>{
 
 view.addEventListener("input", e=>{
   const t = e.target;
-  if(t.dataset.field){                       // 今日页：笔记内容
+  if(t.dataset.field){
+    autoGrow(t);
     const [mid, fid] = t.dataset.field.split(":");
     const day = getDay(selectedDate, true);
     modStateW(day, mid).notes[fid] = t.value;
     touch(day);
-  }else if(t.dataset.medit === "name" || t.dataset.medit === "icon"){  // 设置页：打卡项改名/换图标
+  }else if(t.dataset.medit === "name" || t.dataset.medit === "icon"){
     const m = findMod(t.dataset.id);
     if(!m) return;
     if(t.dataset.medit === "name"){ if(t.value.trim()) m.name = t.value.trim(); }
-    else m.icon = t.value.trim() || "⭐";
+    else m.icon = t.value.trim();
     touchConfig();
-  }else if(t.dataset.fedit){                 // 设置页：记录问题改名
+  }else if(t.dataset.fedit){
     const [mid, fid] = t.dataset.fedit.split(":");
     const m = findMod(mid);
     const f = m && m.fields.find(x => x.id === fid);
@@ -1007,9 +979,7 @@ view.addEventListener("change", e=>{
     try{
       const imported = normalizeDb(JSON.parse(reader.result));
       db = mergeDb(imported, normalizeDb(db));
-      saveLocal();
-      scheduleSync();
-      renderView();
+      saveLocal(); scheduleSync(); renderView();
       alert("导入成功，已与现有数据合并 ✅");
     }catch(err){ alert("导入失败：文件不是有效的备份 JSON"); }
   };
@@ -1029,10 +999,8 @@ function addTodo(){
   if(!text) return;
   const day = getDay(selectedDate, true);
   day.todos.push({ id:uid(), text, done:false });
-  touch(day);
-  renderView();
-  const again = document.getElementById("todoInput");
-  if(again) again.focus();
+  touch(day); renderView();
+  const again = document.getElementById("todoInput"); if(again) again.focus();
 }
 function addTemplate(){
   const inp = document.getElementById("tplInput");
@@ -1040,11 +1008,8 @@ function addTemplate(){
   if(!text) return;
   db.dailyTemplates.items.push({ id:uid(), text });
   db.dailyTemplates.updatedAt = Date.now();
-  saveLocal();
-  scheduleSync();
-  renderView();
-  const again = document.getElementById("tplInput");
-  if(again) again.focus();
+  saveLocal(); scheduleSync(); renderView();
+  const again = document.getElementById("tplInput"); if(again) again.focus();
 }
 
 /* ================= 启动 ================= */
