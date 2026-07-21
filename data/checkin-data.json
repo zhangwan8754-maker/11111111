@@ -71,40 +71,43 @@
  "modConfig": {
   "items": [
    {
-    "color": "#c97f5f",
+    "color": "#bf3b26",
     "fields": [
      {
       "id": "note",
       "label": "训练记录",
-      "ph": "今天练了什么？部位 / 时长 / 组数…"
+      "ph": "今天练了什么？部位 / 时长 / 组数…",
+      "style": "text"
      }
     ],
-    "icon": "⭐",
+    "icon": "",
     "id": "fitness",
     "name": "健身",
     "required": false
    },
    {
-    "color": "#8a9a5b",
+    "color": "#b0742e",
     "fields": [
      {
       "id": "note",
       "label": "备注",
-      "ph": "今天背了哪些？（可不填）"
+      "ph": "今天背了哪些？（可不填）",
+      "style": "text"
      }
     ],
-    "icon": "⭐",
+    "icon": "",
     "id": "words",
     "name": "单词",
     "required": true
    },
    {
-    "color": "#c8a24b",
+    "color": "#8a7a35",
     "fields": [
      {
       "id": "note",
       "label": "备注",
-      "ph": "分析了哪句？（可不填）"
+      "ph": "分析了哪句？（可不填）",
+      "style": "text"
      }
     ],
     "icon": "⭐",
@@ -113,27 +116,31 @@
     "required": true
    },
    {
-    "color": "#7d9bb0",
+    "color": "#4d7a86",
     "fields": [
      {
       "id": "summary",
       "label": "这篇讲了什么？",
-      "ph": "用一两句话概括…"
+      "ph": "用一两句话概括…",
+      "style": "text"
      },
      {
       "id": "stance",
       "label": "作者的立场是什么？",
-      "ph": "支持 / 反对 / 中立？理由是…"
+      "ph": "支持 / 反对 / 中立？理由是…",
+      "style": "text"
      },
      {
       "id": "hard",
       "label": "标出的难句",
-      "ph": "抄下让你卡住的句子…"
+      "ph": "抄下让你卡住的句子…",
+      "style": "text"
      },
      {
       "id": "fav",
       "label": "喜欢的句子",
-      "ph": "值得摘抄的好句…"
+      "ph": "值得摘抄的好句…",
+      "style": "text"
      }
     ],
     "icon": "⭐",
@@ -142,7 +149,7 @@
     "required": true
    }
   ],
-  "updatedAt": 1784590076710
+  "updatedAt": 1784619796995
  },
  "version": 2
 }
