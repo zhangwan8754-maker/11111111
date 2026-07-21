@@ -1,6 +1,7 @@
 /* 离线支持：网络优先，失败时用缓存（不拦截 GitHub API 请求） */
-const CACHE = "daka-v1";
-const ASSETS = ["./", "./index.html", "./icon.svg", "./manifest.webmanifest"];
+const CACHE = "daka-v2";
+const ASSETS = ["./", "./index.html", "./icon.svg", "./manifest.webmanifest",
+  "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   self.skipWaiting();
