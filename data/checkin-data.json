@@ -47,10 +47,25 @@
      "done": false,
      "doneAt": 0,
      "notes": {}
+    },
+    "longs": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    },
+    "reading": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
+    },
+    "words": {
+     "done": false,
+     "doneAt": 0,
+     "notes": {}
     }
    },
    "todos": [],
-   "updatedAt": 1784591011451
+   "updatedAt": 1784591051942
   }
  },
  "modConfig": {
