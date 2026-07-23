@@ -69,6 +69,13 @@
   },
   "2026-07-23": {
    "mods": {
+    "fitness": {
+     "done": true,
+     "doneAt": 1784820202063,
+     "notes": {
+      "note": "有氧，自行车1h"
+     }
+    },
     "longs": {
      "done": true,
      "doneAt": 1784820181358,
@@ -76,7 +83,7 @@
     }
    },
    "todos": [],
-   "updatedAt": 1784820181358
+   "updatedAt": 1784820202063
   }
  },
  "modConfig": {
