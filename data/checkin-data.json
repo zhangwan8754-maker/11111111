@@ -68,9 +68,15 @@
    "updatedAt": 1784620625349
   },
   "2026-07-23": {
-   "mods": {},
+   "mods": {
+    "longs": {
+     "done": true,
+     "doneAt": 1784820181358,
+     "notes": {}
+    }
+   },
    "todos": [],
-   "updatedAt": 0
+   "updatedAt": 1784820181358
   }
  },
  "modConfig": {
