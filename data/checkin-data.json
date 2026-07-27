@@ -103,6 +103,22 @@
    "todos": [],
    "updatedAt": 0
   },
+  "2026-07-26": {
+   "mods": {
+    "fitness": {
+     "done": true,
+     "doneAt": 1785112568221,
+     "notes": {}
+    },
+    "words": {
+     "done": true,
+     "doneAt": 1785112570768,
+     "notes": {}
+    }
+   },
+   "todos": [],
+   "updatedAt": 1785112570768
+  },
   "2026-07-27": {
    "mods": {},
    "todos": [],
