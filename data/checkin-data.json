@@ -99,9 +99,15 @@
    "updatedAt": 1784900708351
   },
   "2026-07-25": {
-   "mods": {},
+   "mods": {
+    "words": {
+     "done": true,
+     "doneAt": 1785112584603,
+     "notes": {}
+    }
+   },
    "todos": [],
-   "updatedAt": 0
+   "updatedAt": 1785112584603
   },
   "2026-07-26": {
    "mods": {
@@ -120,6 +126,11 @@
    "updatedAt": 1785112570768
   },
   "2026-07-27": {
+   "mods": {},
+   "todos": [],
+   "updatedAt": 0
+  },
+  "2026-07-28": {
    "mods": {},
    "todos": [],
    "updatedAt": 0
