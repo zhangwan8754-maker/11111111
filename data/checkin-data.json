@@ -144,9 +144,17 @@
    "updatedAt": 0
   },
   "2026-07-29": {
-   "mods": {},
+   "mods": {
+    "fitness": {
+     "done": true,
+     "doneAt": 1785324725799,
+     "notes": {
+      "note": "腿+肩"
+     }
+    }
+   },
    "todos": [],
-   "updatedAt": 0
+   "updatedAt": 1785324725799
   }
  },
  "modConfig": {
