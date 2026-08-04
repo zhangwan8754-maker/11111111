@@ -170,15 +170,15 @@
   "2026-08-04": {
    "mods": {
     "fitness": {
-     "done": true,
-     "doneAt": 1785803205567,
+     "done": false,
+     "doneAt": 0,
      "notes": {
       "note": "胸+肩"
      }
     }
    },
    "todos": [],
-   "updatedAt": 1785803205567
+   "updatedAt": 1785803211542
   }
  },
  "modConfig": {
